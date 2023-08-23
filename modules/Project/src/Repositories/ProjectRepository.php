@@ -1,10 +1,10 @@
 <?php
 
-namespace Module\Project\src\Repositories;
+namespace Modules\Project\src\Repositories;
 
 use App\Repositories\BaseRepository;
-use Module\Project\src\Models\Project;
-use Module\Project\src\Repositories\ProjectRepositoryInterface;
+use Modules\Project\src\Models\Project;
+use Modules\Project\src\Repositories\ProjectRepositoryInterface;
 
 
 class ProjectRepository extends BaseRepository implements ProjectRepositoryInterface

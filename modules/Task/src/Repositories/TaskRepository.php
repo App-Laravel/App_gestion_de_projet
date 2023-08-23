@@ -1,10 +1,10 @@
 <?php
 
-namespace Module\Task\src\Repositories;
+namespace Modules\Task\src\Repositories;
 
 use App\Repositories\BaseRepository;
-use Module\Task\src\Models\Task;
-use Module\Task\src\Repositories\TaskRepositoryInterface;
+use Modules\Task\src\Models\Task;
+use Modules\Task\src\Repositories\TaskRepositoryInterface;
 
 
 class TaskRepository extends BaseRepository implements TaskRepositoryInterface
