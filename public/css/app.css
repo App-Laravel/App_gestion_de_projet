@@ -1,5 +1,6 @@
 @import url(https://fonts.bunny.net/css?family=Nunito);
 @charset "UTF-8";
+
 /*!
  * Bootstrap  v5.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
@@ -2132,6 +2133,7 @@ progress {
 .form-control[type=file]:not(:disabled):not([readonly]) {
   cursor: pointer;
 }
+
 .form-control:focus {
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);

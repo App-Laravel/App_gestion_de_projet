@@ -8,6 +8,13 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
+
+use App\Rules\{NameRule, EmailRule};
+use Illuminate\Validation\Rules\Password;
+use App\Http\Requests\UserRequest;
 
 class RegisterController extends Controller
 {
@@ -42,21 +49,6 @@ class RegisterController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
-
-    /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
@@ -65,9 +57,50 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name'      => $data['name'],
+            'email'     => $data['email'],
+            'password'  => Hash::make($data['password']),
+            'avatar'    => $data['avatar'],
         ]);
+    }
+
+    public function register(UserRequest $userRequest)
+    {
+        $userData = request()->all();
+        $userData['avatar'] = $this->storeAvatar();
+
+        event(new Registered($user = $this->create($userData)));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered(request(), $user)) {
+            return $response;
+        }
+
+        return request()->wantsJson()
+                    ? new JsonResponse([], 201)
+                    : redirect($this->redirectPath());
+    }
+
+    public function storeAvatar()
+    {
+        if (request()->hasFile('avatar')) {
+            
+            // check if file upload is successful
+            if (request()->avatar->isValid()) {
+                $file = request()->avatar;
+
+                $fileName = time().'_'.request()->avatar->getClientOriginalName();
+                $filePath = $file->storeAs('uploads/avatar', $fileName);
+
+                $filePath = str_replace('/', DIRECTORY_SEPARATOR, $filePath);
+                return storage_path("app".DIRECTORY_SEPARATOR.$filePath);
+
+            } else {
+                return back()->withInput()->with('upload_error', 'The file upload was not successful.');
+            }
+        }
+    
+        return null;
     }
 }
