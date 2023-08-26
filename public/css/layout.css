@@ -1,7 +1,9 @@
 #layout {
+    width: 100vw;
+    height: 100vh;
     display: grid;
     grid-template-columns: 1fr 4fr;
-    grid-template-rows: 0.8fr 8.3fr 0.9fr;
+    grid-template-rows: 0.7fr 8.3fr 1fr;
 }
 #layout a {
     text-decoration: none;
@@ -18,7 +20,6 @@
     grid-column: 1 / 2;
     grid-row: 1 / 4;
     width: 100%;
-    min-height: 100vh;
     background-color: #D4EBFF;
     --width-item: 90%;
     --color-label: rgb(60, 60, 60) 
@@ -162,6 +163,7 @@
 }
 .navbar-top .dropdown-toggle {
     margin-right: calc(0.4rem + 1.5vw);
+    cursor: pointer;
 }
 .navbar-top .dropdown-toggle::after {
     margin-left: -0.2rem;

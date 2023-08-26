@@ -1,0 +1,6 @@
+.layout-main .dashboard img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    margin-right: 5px;
+}

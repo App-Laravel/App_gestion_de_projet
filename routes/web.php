@@ -16,12 +16,10 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->action([UserController::class, 'index']);
 });
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('user')->name('user.')->group(function(){
     Route::get('/', [UserController::class, 'index'])->name('index');

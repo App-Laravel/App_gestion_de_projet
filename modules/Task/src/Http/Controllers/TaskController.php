@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Task\src\Http\Controllers;
 
-class UserController extends Controller
+use App\Http\Controllers\Controller;
+
+class TaskController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -21,6 +23,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('client.home');
+        return view('Task::list');
     }
 }
