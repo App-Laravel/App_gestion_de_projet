@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return redirect()->action([UserController::class, 'index']);
 });
+Route::get('/home', function () {
+    return redirect()->action([UserController::class, 'index']);
+});
 
 Auth::routes();
 

@@ -25,4 +25,19 @@ class ProjectController extends Controller
     {
         return view('Project::list');
     }
+
+    public function detail($id)
+    {
+        return view('Project::detail');
+    }
+
+    public function add()
+    {
+        return view('Project::add');
+    }
+
+    public function edit($id)
+    {
+        return view('Project::edit');
+    }
 }

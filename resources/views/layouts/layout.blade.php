@@ -25,25 +25,25 @@
 
         <div class="sidebar d-flex flex-column align-items-center">
             
-            <div class="logo d-flex align-items-center">
+            <a href="{{url('/')}}" class="logo d-flex align-items-center">
                 <i class="fa-solid fa-globe"></i>
                 <div class="pt-2">SITEWEB NAME</div>
-            </div>
+            </a>
 
             <div class="options mt-4 d-flex flex-column align-items-center">
                 <div class="items-label mb-3">Boards</div>
                 
-                <a href="{{route('user.projects.index')}}" class="options-item mb-2 d-flex">
+                <a href="{{route('user.projects.index')}}" class="options-item mb-2 d-flex align-items-center">
                     <span class="item-icon"><img src="{{asset('img/project.png')}}" alt="icon item sidebar" srcset=""></span>
                     <div class="item-label">Projects(5)</div>
                 </a>
 
-                <a href="{{route('user.tasks.index')}}" class="options-item mb-2 d-flex">
+                <a href="{{route('user.tasks.index')}}" class="options-item mb-2 d-flex align-items-center">
                     <span class="item-icon"><img src="{{asset('img/to-do-list.png')}}" alt="icon item sidebar" srcset=""></span>
                     <div class="item-label">Task(5)</div>
                 </a>
 
-                <a href="#" class="options-item mb-2 d-flex">
+                <a href="#" class="options-item mb-2 d-flex align-items-center">
                     <span class="item-icon"><img src="{{asset('img/delete.png')}}" alt="icon item sidebar" srcset=""></span>
                     <div class="item-label">Trash(5)</div>
                 </a>                   
@@ -68,7 +68,8 @@
                         </a>
                         <div class="assigned"> 
                             <div class="ass-label"> Assigned to: </div> 
-                            <div class="ass-members"> 
+                            <div class="d-flex justify-content-end align-items-center">
+                                <span class="owner">You</span>
                                 <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
                                 <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
                             </div>
@@ -89,7 +90,7 @@
                 <div class="card d-flex flex-column align-items-center mb-2 p-1">
 
                     <div class="card-bloc d-flex justify-content-between align-items-center">
-                        <div> 
+                        <div class="date"> 
                             Due date: 30/08/2023 
                         </div>
                         <div class="btn btn-danger"> High </div>
@@ -98,11 +99,12 @@
 
                     <div class="card-bloc d-flex justify-content-between align-items-center my-1">
                         <a href="#" class="card-title"> 
-                            Task 1 name
+                            Task 1 name Task name 
                         </a>
                         <div class="assigned"> 
                             <div class="ass-label"> Assigned to: </div> 
-                            <div class="ass-members"> 
+                            <div class="d-flex justify-content-end align-items-center">
+                                <span class="owner">You</span>
                                 <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
                                 <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
                             </div>
@@ -123,7 +125,7 @@
                 <div class="card d-flex flex-column align-items-center mb-2 p-1">
 
                     <div class="card-bloc d-flex justify-content-between align-items-center">
-                        <div> 
+                        <div class="date"> 
                             Due date: 30/08/2023 
                         </div>
                         <div class="btn btn-danger"> High </div>
@@ -132,11 +134,12 @@
 
                     <div class="card-bloc d-flex justify-content-between align-items-center my-1">
                         <a href="#" class="card-title"> 
-                            Task 1 name
+                            Task 1 name Task name 
                         </a>
                         <div class="assigned"> 
                             <div class="ass-label"> Assigned to: </div> 
-                            <div class="ass-members"> 
+                            <div class="d-flex justify-content-end align-items-center">
+                                <span class="owner">You</span>
                                 <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
                                 <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
                             </div>
@@ -152,7 +155,9 @@
                             <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
                         </div>
                     </div>
-                </div>    
+                </div>
+                
+   
             </div>
             
             <div class="copyright"> My Siteweb &copy; 2023 - All Rights Reserved</div>          
@@ -196,7 +201,7 @@
             <div class="actions d-flex justify-content-between align-items-center w-100 h-100">
                 
                 <div class="footer-menu w-75 d-flex justify-content-evenly">
-                    <a href="#" class="menu-items">
+                    <a href="{{route('user.projects.index')}}" class="menu-items">
                         <img src="{{asset('img/project-white.png')}}" alt="" srcset="">
                         <span>ALL PROJECTS</span> 
                     </a>
@@ -204,7 +209,7 @@
                         <img src="{{asset('img/to-do-list-white.png')}}" alt="" srcset="">
                         <span>ALL TASKS </span> 
                     </a>
-                    <a href="#" class="menu-items">
+                    <a href="{{url('/')}}" class="menu-items">
                         <img src="{{asset('img/home.png')}}" alt="" srcset="">
                         <span>HOME</span>
                     </a>
@@ -221,6 +226,7 @@
 
         </div>  
     </div>
+
     @yield('script')
 </body>
 </html>

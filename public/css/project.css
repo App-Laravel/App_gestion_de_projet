@@ -1,0 +1,168 @@
+.projects {
+    --s-add: calc(0.6rem + 0.5vw);
+    --fs-filter: calc(0.5rem + 0.5vw);
+    --fs-filter-hover : calc(0.6rem + 0.5vw);
+    --bs-search: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    --co-bd-search: rgb(229, 228, 228);
+}
+.projects .header {
+    display: grid;
+    grid-template-columns: 3fr 5fr 2fr;
+    grid-template-rows: 100%;
+}
+.projects .header .label {
+    grid-column: 1 / 2;
+}
+.projects .header .functions {
+    grid-column: 2 / 3;
+}
+.projects .header .add-project {
+    grid-column: 3 / 4;
+}
+
+.projects .header .label-top img {
+    width: calc(1rem + 1vw);
+    height: calc(1rem + 1vw);
+    object-fit: cover;
+    margin-right: 0.5vw;
+}
+.projects .header .label-top div {
+    font-size: calc(0.5rem + 1vw);
+    font-weight: 600;
+}
+.projects .header .info-project {
+    font-size: calc(0.18rem + 1vw);
+    color: grey;
+}
+.projects .functions #search {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-right: none;
+}
+.projects .functions input {
+    border: none;
+    box-shadow: var(--bs-search);
+}
+.projects .functions input:focus {
+    box-shadow: var(--bs-search) !important;
+    border-color: var(--co-bd-search) !important;
+}
+.projects .functions button {
+    margin-left: -1.5rem;
+    border: 1px solid var(--co-bd-search);
+    height: auto;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: var(--bs-search);
+}
+.projects .functions .filter {
+    width: 15%;
+}
+.projects .functions .dropdown-toggle {
+    margin-top: 2px;
+}
+.projects .functions .dropdown-toggle::after {
+    display: none !important;
+}
+.projects .functions .dropdown-item {
+    font-size: var(--fs-filter);
+    width: 20% !important;
+}
+.projects .functions .dropdown-item:hover {
+    font-size: var(--fs-filter-hover);
+}
+.projects .functions .dropdown-menu {
+    min-width: calc(5rem + 2vw) !important;
+}
+
+.projects .add-project .add {
+    font-size: var(--s-add);
+    float: right;
+    border-radius: 15px;
+}
+.projects .add-project img {
+    width: var(--s-add);
+}
+
+/********************************************* project card ************************************************************/
+
+.projects .pj-card {
+    width: 45%;
+    padding: calc(0.3rem + 0.5vw) !important;
+    --fs-header: calc(0.3rem + 0.6vw);
+    --fs-title: calc(0.4rem + 0.7vw);
+    --fs-date: calc(0.2rem + 0.6vw);
+    --fs-owner: calc(0.27rem + 0.4vw);
+    --fs-progress: calc(0.3rem + 0.6vw);
+    --h-progress: calc(1rem + 1vw);
+    --btn-pd-x: 5px;
+    --btn-pd-y: 2px;
+    --w-bloc: 100%;
+    --w-title: 70%;
+    --w-assigned: calc(var(--w-bloc) - var(--w-title));
+    --w-avatar: calc(1rem + 0.4vw);
+    --w-sub-title: 70%;
+    --w-action: calc(var(--w-bloc) - var(--w-sub-title));
+    --w-action-icon: calc(0.7rem + 0.4vw);
+    border: none;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.projects .pj-card .card-bloc {
+    width: var(--w-bloc);
+    font-size: var(--fs-header);
+}
+.projects .pj-card .card-bloc .btn {
+    font-size: var(--fs-header) !important;
+    padding: var(--btn-pd-y) var(--btn-pd-x) !important;
+    cursor: initial;
+}
+.projects .pj-card .card-bloc .btn-success {
+    font-size: var(--fs-date) !important;
+}
+.projects .pj-card .card-title {
+    width: var(--w-title);
+    font-size: var(--fs-title);
+    font-weight: 600; 
+    padding-right: 3px;  
+}
+.projects .pj-card .assigned {
+    width: var(--w-assigned);
+    font-size: var(--fs-header);
+    text-align: end;  
+}
+.projects .pj-card .owner {
+    display: block;
+    font-size: var(--fs-owner);
+    border: 1px solid blue;
+    border-radius: 100%;
+    padding: 2px;
+    height: auto;
+}
+.projects .pj-card .member {
+    width: var(--w-avatar);
+    height: var(--w-avatar);
+    border-radius: 100%;
+}
+.projects .pj-card .assigned img {
+    width: 100%;
+    object-fit: cover;
+}
+.projects .pj-card .card-project {
+    width: var(--w-sub-title);
+    font-size: var(--fs-progress);
+    font-weight: 600;
+    color: rgb(60, 60, 60);
+}
+.projects .pj-card .project-progress {
+    height: var(--h-progress);
+}
+.projects .pj-card .actions img {
+    width: var(--w-action-icon);
+    margin-left: 5px;
+}
+
+/********************************************* Detail Project ************************************************************/
+
+
+
+

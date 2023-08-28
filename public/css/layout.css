@@ -5,15 +5,19 @@
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 0.7fr 8.3fr 1fr;
 }
-#layout a {
+#layout a, .container a {
     text-decoration: none;
     cursor: pointer;
+    color: black;
 }
 .layout-main {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
 }
 
+.container-reset-password {
+    margin-top: 5rem;
+}
 /*********************************************** sidebar *************************************************************/
 
 .sidebar {
@@ -37,18 +41,18 @@
 .sidebar .options {
     width: var(--width-item);
 }
-.sidebar a {
+.sidebar a, .container a {
     color: black;
 }
 .sidebar .options .items-label {
     width: 100%;
-    font-size: calc(0.9rem + 0.6vw);
+    font-size: calc(0.6rem + 0.6vw);
     font-weight: 600;
     color: var(--color-label);
 }
 .sidebar .options .recent-tasks-label {
     width: 100%;
-    font-size: calc(0.6rem + 0.4vw);
+    font-size: calc(0.4rem + 0.6vw);
     color: var(--color-label);
 }
 .sidebar .options-item, .sidebar .card {
@@ -61,7 +65,7 @@
 }
 
 .sidebar .options-item .item-label {
-    font-size: calc(0.8rem + 0.6vw);
+    font-size: calc(0.5rem + 0.6vw);
 }
 .sidebar .copyright {
     margin-top: auto;
@@ -72,14 +76,15 @@
 /*********************************************** card *************************************************************/
 .card {
     --fs-header: calc(0.19rem + 0.5vw);
-    --fs-title: calc(0.35rem + 0.7vw);
-    --fs-sub-title: calc(0.3rem + 0.6vw);
-    --btn-pd-x: 3px;
-    --btn-pd-y: 5px;
+    --fs-title: calc(0.25rem + 0.7vw);
+    --fs-sub-title: calc(0.2rem + 0.7vw);
+    --btn-pd-x: 5px;
+    --btn-pd-y: 2px;
     --w-bloc: 100%;
-    --w-title: 70%;
+    --w-title: 65%;
     --w-assigned: calc(var(--w-bloc) - var(--w-title));
-    --w-avatar: calc(0.9rem + 0.23vw);
+    --w-avatar: calc(0.7rem + 0.23vw);
+    --fs-owner: calc(0.14rem + 0.23vw);
     --w-sub-title: 70%;
     --w-action: calc(var(--w-bloc) - var(--w-sub-title));
     --w-action-icon: calc(0.7rem + 0.18vw);
@@ -92,7 +97,7 @@
 }
 .card .card-bloc .btn {
     font-size: var(--fs-header) !important;
-    padding: var(--btn-pd-x) var(--btn-pd-y);
+    padding: var(--btn-pd-y) var(--btn-pd-x) !important;
     cursor: initial;
 }
 .card .card-title {
@@ -106,12 +111,17 @@
     font-size: var(--fs-header);
     text-align: end;  
 }
-.card .member, .member {
+.card .owner {
     display: block;
+    font-size: var(--fs-owner);
+    border: 1px solid blue;
+    border-radius: 100%;
+    padding: 2px 1.5px 0 1.5px;
+}
+.card .member {
     width: var(--w-avatar);
     height: var(--w-avatar);
     border-radius: 100%;
-    float: right;
 }
 .card .assigned img {
     width: 100%;
@@ -141,34 +151,35 @@
     height: 10vh;
     visibility: hidden;
 }
-.navbar-top .logo .fa-globe {
+.navbar-top .logo .fa-globe, .container .logo .fa-globe {
     height: calc(19px + 1.5vw) !important;
     margin-left: calc(8px + 0.8vw);
 }
-.navbar-top .logo div {
+.navbar-top .logo div, .container .logo div {
     font-size: calc(0.5rem + 0.7vw);
 }
-.navbar-top .user-icon {
+.navbar-top .user-icon, .dropdown .user-icon  {
     display: inline-block;
 }
-.navbar-top .username {
+.navbar-top .username, .dropdown .username {
     vertical-align: -0.2rem;
     font-size: calc(0.6rem + 0.45vw);
 }
-.navbar-top .member {
+.navbar-top .member, .dropdown .member {
+    display: inline-block;
     width: calc(1.2rem + 0.7vw);
     height: calc(1.2rem + 0.7vw);
     border-radius: 100%;
     margin-left: 0.6rem;
 }
-.navbar-top .dropdown-toggle {
+.navbar-top .dropdown-toggle, .dropdown .dropdown-toggle {
     margin-right: calc(0.4rem + 1.5vw);
     cursor: pointer;
 }
-.navbar-top .dropdown-toggle::after {
+.navbar-top .dropdown-toggle::after, .dropdown .dropdown-toggle::after {
     margin-left: -0.2rem;
 }
-.navbar-top .member img {
+.navbar-top .member img, .dropdown .member img {
     width: 100%;
     object-fit: cover;
 }
@@ -251,7 +262,7 @@
     .navbar-top .username {
         visibility: hidden;
     }
-    .navbar-top .logo div {
+    .navbar-top .logo div, .container .logo div {
         font-size: calc(0.3rem + 2vw);
     }
 }

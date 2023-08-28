@@ -1,0 +1,37 @@
+.add-project .add-form {
+    width: 50%;
+}
+.add-project .add-label {
+    font-size: calc(0.8rem + 1vw);
+    text-align: center;
+}
+.add-project label {
+    font-size: calc(0.4rem + 0.6vw);
+}
+.add-project input, .add-project textarea, .add-project select {
+    font-size: calc(0.55rem + 0.6vw);
+}
+.add-project input::placeholder, .add-project textarea::placeholder {
+    color: grey;
+}
+.add-project .date {
+    width: 40% !important;
+}
+.add-project .add-email {
+    width: calc(0.5rem + 1vw);
+    height: calc(0.5rem + 1vw);
+    object-fit: cover;
+}
+.add-project .actions button, .add-project .actions a {
+    font-size: calc(0.7rem + 0.6vw);
+    color: white;
+}
+.add-project .actions button[type="reset"] {
+    background-color: #FF8B20;
+}
+.border-danger {
+    border: 2px solid red !important;
+}
+.border-success {
+    border: 2px solid rgb(1, 172, 1) !important;
+}
