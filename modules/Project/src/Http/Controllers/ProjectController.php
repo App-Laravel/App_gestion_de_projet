@@ -59,7 +59,14 @@ class ProjectController extends Controller
     // detail of a project
     public function detail($id = null)
     {
-        return view('Project::detail');
+        $project = checkProjectExistence($id);
+        
+        if (!empty($project)) {
+            $coworkers = $project->users;
+            return view('Project::detail', compact('project', 'coworkers'));
+        }
+
+        return view('client.home');        
     }
 
 
@@ -146,7 +153,7 @@ class ProjectController extends Controller
             }  
         }
     }
-    
+
 
     // Method "paginate" on a Collection
     public function paginate($items, $perPage = 8, $page = null, $baseUrl = null, $options = [])

@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="card-bloc d-flex justify-content-between align-items-center mt-1">
-                    <a href="{{route('user.projects.detail', ['id'=>1])}}" class="card-title"> 
+                    <a href="{{route('user.projects.detail', ['id'=>$project->id])}}" class="card-title"> 
                         {{ ucfirst($project->name) }}
                     </a>
                     <div class="assigned"> 

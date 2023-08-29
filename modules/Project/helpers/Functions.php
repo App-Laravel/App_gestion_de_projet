@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 function getCreatorName($id) {
     if ($id == Auth::user()->id) return 'You';
-    return User::find($id)->name;
+    return ucwords(User::find($id)->name);
 }
 
 function getPriority($priority) {
@@ -29,11 +29,11 @@ function getCoworkers($projectId) {
     return Project::find($projectId)->users;
 }
 
-function checkInteger($id) {
+function checkInteger($id=null) {
     $pattern = '/^[0-9]{1,}$/';
     return preg_match($pattern, $id);
 }
-function checkProjectExistence($id) {
+function checkProjectExistence($id=null) {
     if (checkInteger($id)) {
         $project = Project::find($id);
         if (!empty($project)) {

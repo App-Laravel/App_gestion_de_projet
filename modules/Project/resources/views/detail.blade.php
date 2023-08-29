@@ -13,45 +13,49 @@
         <table class="properties table">
             <thead>
                 <tr>
-                    <th colspan="3"><div class="project-name w-100">Project Name</div></th>
+                    <th colspan="3"><div class="project-name w-100">{{ ucfirst($project->name) }}</div></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td> Created by: </td>
-                    <td> You </td>
+                    <td>  
+                        {{ getCreatorName($project->creator_id) }}
+                    </td>
                     <td rowspan="5"> 
                         <div class="actions d-flex flex-column align-items-center justify-content-center">
-                            <a href="#" class="modify btn btn-primary mb-4">Modify</a>
-                            <a href="#" class="delete btn btn-danger">Delete</a> 
+                            <a href="{{ route('user.projects.edit', ['id'=>$project->id]) }}" class="modify btn btn-primary mb-4">Modify</a>
+                            <a href="{{ route('user.projects.delete', ['id'=>$project->id]) }}" class="delete delete-action btn btn-danger">Delete</a> 
                         </div>
                     </td>
                 </tr>
 
                 <tr>
                     <td> Priority: </td>
-                    <td> <div class="priority btn btn-danger">High</div> </td>
+                    <td> <div class="priority btn {{ getPriorityClass($project->priority) }} ">{{ getPriority($project->priority) }}</div> </td>
                 </tr>
 
                 <tr>
                     <td> Start date: </td>
-                    <td> 15/07/2023 </td>
+                    <td> {{ dateDisplay($project->start_date) }} </td>
                 </tr>
 
                 <tr>
                     <td> Due date: </td>
-                    <td> 15/07/2023 </td>
+                    <td> {{ dateDisplay($project->due_date) }} </td>
                 </tr>
 
                 <tr>
                     <td> Coworkers: </td>
                     <td>  
                         <div>
-                            <label for="coworkers"> 3</label>
+                            <label for="coworkers"> {{ $coworkers->count() }} </label>
                             <select id="coworkers" class="select-form">
-                                <option value="">Coworker 1 Name</option>
-                                <option value="">Coworker 2 Name</option>
-                                <option value="">Coworker 3 Name</option>
+
+                                @foreach ($coworkers as $coworker)
+                                    <option value="{{ $coworker->id }}">{{ ucwords($coworker->name) }}</option>
+                                @endforeach
+                                
                             </select>
                         </div>
                     </td>
@@ -60,7 +64,7 @@
                 <tr>
                     <td colspan="3"> 
                         <div>Comments:</div> 
-                        <div class="comments"></div>
+                        <div class="comments p-2">{{ $project->comment }}</div>
                     </td>
                 </tr>            
             </tbody>
@@ -159,8 +163,12 @@
                                 Task 1 name Task name Task 1 name Task name
                             </a>
                             <div class="taskActions"> 
-                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
-                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
+                                <a href="#" >
+                                    <img src="{{asset('img/edit.png')}}" alt="" srcset="">
+                                </a>
+                                <a href="#">
+                                    <img src="{{asset('img/delete.png')}}" alt="" srcset="">
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -203,5 +211,8 @@
         </div>
 
     </div>
-
+    @include('components.delete')
+@endsection
+@section('script')
+    <script defer src="{{asset('js/delete.js')}}"></script>
 @endsection
