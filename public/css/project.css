@@ -1,3 +1,6 @@
+.app-pagination {
+    width: 96%;
+}
 .projects {
     --s-add: calc(0.6rem + 0.5vw);
     --fs-filter: calc(0.5rem + 0.5vw);
@@ -66,7 +69,6 @@
 }
 .projects .functions .dropdown-item {
     font-size: var(--fs-filter);
-    width: 20% !important;
 }
 .projects .functions .dropdown-item:hover {
     font-size: var(--fs-filter-hover);
@@ -79,6 +81,7 @@
     font-size: var(--s-add);
     float: right;
     border-radius: 15px;
+    color: white !important;
 }
 .projects .add-project img {
     width: var(--s-add);
@@ -111,12 +114,15 @@
     width: var(--w-bloc);
     font-size: var(--fs-header);
 }
+.projects .pj-card .creator {
+    width: 45%;
+}
 .projects .pj-card .card-bloc .btn {
     font-size: var(--fs-header) !important;
     padding: var(--btn-pd-y) var(--btn-pd-x) !important;
     cursor: initial;
 }
-.projects .pj-card .card-bloc .btn-success {
+.projects .pj-card .card-bloc .btn {
     font-size: var(--fs-date) !important;
 }
 .projects .pj-card .card-title {
@@ -130,21 +136,22 @@
     font-size: var(--fs-header);
     text-align: end;  
 }
-.projects .pj-card .owner {
+.projects .pj-card .owner, .projects .pj-card .ownerPlus {
     display: block;
     font-size: var(--fs-owner);
-    border: 1px solid blue;
     border-radius: 100%;
-    padding: 2px;
-    height: auto;
-}
-.projects .pj-card .member {
+    background-color: rgb(228, 226, 226);
+    color: black;
     width: var(--w-avatar);
     height: var(--w-avatar);
-    border-radius: 100%;
+    text-align: center;
+    padding-top: 3px;
 }
 .projects .pj-card .assigned img {
     width: 100%;
+    width: var(--w-avatar);
+    height: var(--w-avatar);
+    border-radius: 100%;
     object-fit: cover;
 }
 .projects .pj-card .card-project {
@@ -163,6 +170,114 @@
 
 /********************************************* Detail Project ************************************************************/
 
+.project {
+    --w-page: 90%;
+    --fs-page: calc(0.55rem + 0.6vw);
+    --fs-priority: calc(0.3rem + 0.6vw); 
+}
+.project .project-name {
+    text-align: center;
+    font-size: calc(0.6rem + 1vw);
+}
+.project .properties, .project .tasks {
+    width: var(--w-page);
+    font-size: var(--fs-page);
 
+}
+.project .priority {
+    font-size: var(--fs-priority);
+    cursor: initial;
+}
+.project .actions {
+    height: 25vh !important;
+}
+.project .actions a {
+    color: white !important;
+    font-size: var(--fs-page);
+}
+.project #coworkers {
+    margin-left: calc(0.2rem + 0.6vw);
+    border: 1px rgb(219, 217, 217) solid !important;
+}
+.project .comments {
+    width: 100%;
+    min-height: 10vh !important;
+    border: 1px rgb(153, 153, 153) solid;
+    border-radius: 10px;
+}
+
+/******************************************** tasks of project *********************************************************/
+
+.project .todo, .project .inprogress, .project .done {
+    width: 32%;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: rgb(232, 230, 230);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.project .taskTitle {
+    text-align: center;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+.project .todo .taskTitle {
+    background-color: #0d6efd;
+}
+.project .inprogress .taskTitle {
+    background-color: #FF9432;
+}
+.project .done .taskTitle {
+    background-color: #dc3545;
+}
+
+/******** card tasks of project *********/
+
+.project .p-card {
+    --fs-header: calc(0.19rem + 0.5vw);
+    --fs-title: calc(0.25rem + 0.7vw);
+    --fs-sub-title: calc(0.2rem + 0.7vw);
+    --btn-pd-x: 5px;
+    --btn-pd-y: 2px;
+    --w-bloc: 100%;
+    --w-title: 75%;
+    --w-assigned: calc(var(--w-bloc) - var(--w-title));
+    --w-avatar: calc(0.7rem + 0.23vw);
+    --fs-owner: calc(0.14rem + 0.23vw);
+    --w-sub-title: 70%;
+    --w-action: calc(var(--w-bloc) - var(--w-sub-title));
+    --w-action-icon: calc(0.7rem + 0.18vw);
+    border: none;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: white;
+}
+.project .p-card .card-bloc {
+    width: var(--w-bloc);
+    font-size: var(--fs-header);
+}
+.project .p-card .card-bloc .btn {
+    font-size: var(--fs-header) !important;
+    padding: var(--btn-pd-y) var(--btn-pd-x) !important;
+    cursor: initial;
+}
+.project .p-card .card-title {
+    width: var(--w-title);
+    max-height: 100px;
+    font-size: var(--fs-title);
+    font-weight: 600; 
+    padding-right: 3px;  
+}
+.project .p-card .taskActions img {
+    width: var(--w-action-icon);
+    margin-left: 5px;
+}
+.project .new-task {
+    background-color: #A6D4FF;
+}
+.project .new-task img {
+    width: calc(0.2rem + 0.6vw);
+    height: calc(0.2rem + 0.6vw);
+    object-fit: cover;
+    margin-right: 4px;
+}
 
 

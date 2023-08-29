@@ -12,14 +12,22 @@
         <div class="add-form d-flex flex-column align-items-center">
 
             <div class="add-label w-100"> Modify the project </div>
+
+            @if (session('msg'))
+                <div class="alert alert-success" role="alert"> {{ session('msg') }} </div>
+            @endif
+
+            @if (session('msg-error'))
+                <div class="alert alert-warning" role="alert"> {{ session('msg-error') }} </div>
+            @endif
     
-            <form method="POST" action="{{ route('login') }}" class="d-flex flex-column w-100">  
+            <form method="POST" action="{{ route('user.projects.postEdit') }}" class="d-flex flex-column w-100">  
     
                 <div class="mb-3">
                     <label for="name"> {{ __('Name') }} </label>
     
                     <div>
-                        <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required placeholder="Name..." autocomplete="name" autofocus>
+                        <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $project->name }}" required placeholder="Name..." autocomplete="name" autofocus>
                         @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -34,9 +42,9 @@
                     <div>
                         <select name="priority" id="priority" class="form-select {{$errors->has('priority')? 'is-invalid' :''}}">
                             <option value="0">Select priority</option>
-                            <option value="high">High</option>
-                            <option value="medium">Medium</option>
-                            <option value="low">Low</option>
+                            <option value="1" {{ (old('priority') ==1 || $project->priority == 1) ? 'selected' : false }} >High</option>
+                            <option value="2" {{ (old('priority') ==2 || $project->priority == 2) ? 'selected' : false }} >Medium</option>
+                            <option value="3" {{ (old('priority') ==3 || $project->priority == 3) ? 'selected' : false }} >Low</option>
                         </select>
                         @error('priority')
                             <span class="invalid-feedback" role="alert">
@@ -51,7 +59,7 @@
                     <div class="date">
                         <label for="startdate"> {{ __('Start date') }} </label>
                         <div>
-                            <input id="startdate" type="date" class="form-control @error('startdate') is-invalid @enderror" name="startdate" value="{{ old('startdate') }}" required>
+                            <input id="startdate" type="date" class="form-control @error('startdate') is-invalid @enderror" name="startdate" value="{{ old('startdate') ?? $project->start_date }}" required>
                             @error('startdate')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -62,7 +70,7 @@
                     <div class="date">
                         <label for="duedate"> {{ __('Due date') }} </label>
                         <div>
-                            <input id="duedate" type="date" class="form-control @error('duedate') is-invalid @enderror" name="duedate" value="{{ old('duedate') }}" required>
+                            <input id="duedate" type="date" class="form-control @error('duedate') is-invalid @enderror" name="duedate" value="{{ old('duedate') ?? $project->due_date }}" required>
                             @error('duedate')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -79,15 +87,18 @@
                         <img class="add-email" src="{{asset('img/plus_color.png')}}" alt="" srcset="">
                     </div>
                     
-                    <div>
-                        <input id="invite" type="email" class="form-control" name="email[]" placeholder="Email of coworkers...">
-                    </div>
+                    @foreach ($coworkers as $coworker)
+                        <div class="invites">
+                            <input id="invite" type="email" class="form-control invite" name="email[]" value="{{ old('email') ?? $coworker->email }}" autocomplete="email" placeholder="Email of coworkers...">
+                        </div>
+                    @endforeach
+
                 </div>
     
                 <div class="mb-3">
                     <label for="comment"> {{ __('Comment') }} </label>
                     <div>
-                        <textarea name="comment" id="comment" rows="4" class="form-control" placeholder="Comments..."></textarea>
+                        <textarea name="comment" id="comment" rows="4" class="form-control" placeholder="Comments...">{{ old('comment') ?? $project->comment }}</textarea>
                     </div>
                 </div>
     
@@ -111,4 +122,8 @@
     </div>
 
     
+@endsection
+
+@section('script')
+    <script type="text/javascript" defer src="{{asset('js/add_email.js')}}"></script>
 @endsection

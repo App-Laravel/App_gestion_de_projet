@@ -91,10 +91,10 @@ class RegisterController extends Controller
                 $file = request()->avatar;
 
                 $fileName = time().'_'.request()->avatar->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/avatar', $fileName);
+                $filePath = $file->storeAs('uploads/avatar', $fileName, 'public');
 
                 $filePath = str_replace('/', DIRECTORY_SEPARATOR, $filePath);
-                return storage_path("app".DIRECTORY_SEPARATOR.$filePath);
+                return DIRECTORY_SEPARATOR.$filePath;
 
             } else {
                 return back()->withInput()->with('upload_error', 'The file upload was not successful.');

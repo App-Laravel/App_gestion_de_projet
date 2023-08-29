@@ -1,10 +1,11 @@
 #layout {
-    width: 100vw;
-    height: 100vh;
+    width: 99.95vw !important;
+    min-height: 100vh !important;
     display: grid;
     grid-template-columns: 1fr 4fr;
-    grid-template-rows: 0.7fr 8.3fr 1fr;
+    grid-template-rows: 7vh auto 10vh;
 }
+
 #layout a, .container a {
     text-decoration: none;
     cursor: pointer;
@@ -74,10 +75,16 @@
 }
 
 /*********************************************** card *************************************************************/
-.card {
-    --fs-header: calc(0.19rem + 0.5vw);
-    --fs-title: calc(0.25rem + 0.7vw);
-    --fs-sub-title: calc(0.2rem + 0.7vw);
+.side-card {
+    width: 100%;
+    background-color: white;
+    border: none;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 5px;    
+
+    --fs-header: calc(0.1rem + 0.6vw);
+    --fs-title: calc(0.2rem + 0.7vw);
+    --fs-sub-title: calc(0.15rem + 0.7vw);
     --btn-pd-x: 5px;
     --btn-pd-y: 2px;
     --w-bloc: 100%;
@@ -88,52 +95,50 @@
     --w-sub-title: 70%;
     --w-action: calc(var(--w-bloc) - var(--w-sub-title));
     --w-action-icon: calc(0.7rem + 0.18vw);
-    border: none;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-.card .card-bloc {
+.side-card .card-bloc {
     width: var(--w-bloc);
     font-size: var(--fs-header);
 }
-.card .card-bloc .btn {
+.side-card .card-bloc .btn {
     font-size: var(--fs-header) !important;
     padding: var(--btn-pd-y) var(--btn-pd-x) !important;
     cursor: initial;
 }
-.card .card-title {
+.side-card .cardTitle {
     width: var(--w-title);
     font-size: var(--fs-title);
     font-weight: 600; 
     padding-right: 3px;  
 }
-.card .assigned {
+.side-card .assigned {
     width: var(--w-assigned);
     font-size: var(--fs-header);
     text-align: end;  
 }
-.card .owner {
+.side-card .owner {
     display: block;
     font-size: var(--fs-owner);
     border: 1px solid blue;
     border-radius: 100%;
     padding: 2px 1.5px 0 1.5px;
 }
-.card .member {
+.side-card .member {
     width: var(--w-avatar);
     height: var(--w-avatar);
     border-radius: 100%;
 }
-.card .assigned img {
+.side-card .assigned img {
     width: 100%;
     object-fit: cover;
 }
-.card .card-project {
+.side-card .card-project {
     width: var(--w-sub-title);
     font-size: var(--fs-sub-title);
     font-weight: 600;
-    color: rgb(60, 60, 60);
+    color: rgb(77, 77, 77) !important;
 }
-.card .actions img {
+.side-card .actions img {
     width: var(--w-action-icon);
     margin-left: 5px;
 }
@@ -193,7 +198,7 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .navbar-footer a {
-    color: white;
+    color: white !important;
 }
 .navbar-footer .menu-items img {
     width: calc(1.1rem + 1vw);

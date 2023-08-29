@@ -18,14 +18,14 @@
                     <div>My Projects</div>
                 </div>
                 <div class="info-project">
-                    You have <span class="text-primary font-weight-bold">5</span> open projects
+                    You have <span class="text-primary font-weight-bold">{{ $total }}</span> open projects
                 </div>
             </div>
             <div class="functions w-100 d-flex nowrap justify-content-between">
                 <div class="w-75">
                     <form action="" method="GET" class="w-100 d-flex align-items-center">
-                        <label for="search" class="d-none"></label>
-                        <input type="search" id="search" name="search" class="form-control w-100" value="{{old('search')}}" placeholder="Search...">
+                        <label for="keyword" class="d-none"></label>
+                        <input type="text" id="keyword" name="keyword" class="form-control w-100" value="{{old('keyword')}}" placeholder="Search...">
                         <button type="submit"><img src="{{asset('img/search.png')}}" alt="search icon" srcset=""></button>
                     </form>
                 </div>
@@ -34,47 +34,78 @@
                             <img src="{{asset('img/filter.png')}}" alt="" srcset="">                        
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Name</a></li>                        
-                        <li><a class="dropdown-item" href="#!">Owner</a></li>
-                        <li><a class="dropdown-item" href="#!">Priority</a></li>
-                        <li><a class="dropdown-item" href="#!">Due date</a></li>
+                        <li><a class="projectFilter dropdown-item" href="name" >Name</a></li>                        
+                        <li><a class="projectFilter dropdown-item" href="creator_id" >Owner</a></li>
+                        <li><a class="projectFilter dropdown-item" href="priority" >Priority</a></li>
+                        <li><a class="projectFilter dropdown-item" href="due_date" >Due date</a></li>
 
                     </ul>
                 </div>
             </div>
             
-            <a href="{{route('user.projects.add')}}" class="add-project">
-                <div class="add btn btn-primary">
+            <div class="add-project">
+                <a href="{{route('user.projects.add')}}" class="add btn btn-primary">
                     <img src="{{asset('img/plus.png')}}" alt="" srcset="">
                     Project
-                </div>
-            </a>
+                </a>
+            </div>
 
         </div>
 
-        <div class="cards w-100 mt-4 p-4 d-flex justify-content-between flex-wrap">
+        @if (session('msg'))
+            <div class="alert alert-success" role="alert"> {{ session('msg') }} </div>
+        @endif
 
+        @if (session('msg-error'))
+            <div class="alert alert-warning" role="alert"> {{ session('msg-error') }} </div>
+        @endif
+
+        <div class="cards w-100 mt-4 px-4 d-flex justify-content-between flex-wrap">
+
+            @foreach ($projects as $project)               
+            
             <div class="pj-card mb-4 d-flex flex-column align-items-center">
 
                 <div class="card-bloc d-flex justify-content-between align-items-center">
                     <div class="creator"> 
-                        Created by: You 
+                        Created by: {{ getCreatorName($project->creator_id) }} 
                     </div>
-                    <div class="btn btn-danger"> High </div>
-                    <div class="btn btn-success">31/08/2023 - 26/09/2023</div>
+                    <div class="btn {{ getPriorityClass($project->priority) }}"> {{ getPriority($project->priority) }} </div>
+                    <div class="btn {{ ($project->due_date < now()) ? 'btn-danger' : 'btn-success' }}">{{ dateDisplay($project->start_date) }} - {{ dateDisplay($project->due_date) }}</div>
                 </div>
 
                 <div class="card-bloc d-flex justify-content-between align-items-center mt-1">
                     <a href="{{route('user.projects.detail', ['id'=>1])}}" class="card-title"> 
-                        Project 1 name
+                        {{ ucfirst($project->name) }}
                     </a>
                     <div class="assigned"> 
                         <div class="d-flex justify-content-end align-items-center">
-                            @auth
-                                <span class="owner">You</span>
-                            @endif
-                            <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
-                            <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
+                            
+                            @if (getCoworkers($project->id)->count() > 0)
+                                @php
+                                    $count = 0;
+                                @endphp
+                                @foreach (getCoworkers($project->id) as $user)
+                                    @if (Auth::user()->id == $user->id)
+                                        <span class="owner">You</span>
+                                    @endif                                                            
+                                @endforeach
+                                
+                                @foreach (getCoworkers($project->id) as $user)
+                                    @if (Auth::user()->id != $user->id)
+                                        @php
+                                            $count++;
+                                        @endphp
+                                        @if ($count < 2)
+                                            <span class="member"><img src="{{ $user->avatar ? asset('storage'.$user->avatar) : asset('storage/uploads/avatar/user.png') }}" alt="avatar" srcset=""></span>                                                                                   
+                                        @endif                                        
+                                    @endif                                                                                                     
+                                @endforeach
+                                @if (getCoworkers($project->id)->count() > 2)
+                                    <span class="ownerPlus">+{{getCoworkers($project->id)->count() - 2}}</span>
+                                @endif
+                            @endif                            
+                            
                         </div>
                     </div>
                 </div>
@@ -85,90 +116,44 @@
                         <progress class="project-progress" min="0" max="100" value="50"></progress>
                     </div>
                     <div class="actions"> 
-                        <a href="{{route('user.projects.edit', ['id'=>1])}}"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
-                        <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
+                        <a href="{{route('user.projects.edit', ['id'=> $project->id])}}"><img src="{{asset('img/edit.png')}}" alt="modify icon" srcset=""></a>
+                        <a href="#"><img src="{{asset('img/delete.png')}}" alt="delete icon" srcset=""></a>
                     </div>
                 </div>
             </div>
 
-            <div class="pj-card mb-4 d-flex flex-column align-items-center">
+            @endforeach
+        </div>
 
-                <div class="card-bloc d-flex justify-content-between align-items-center">
-                    <div class="creator"> 
-                        Created by: You 
-                    </div>
-                    <div class="btn btn-danger"> High </div>
-                    <div class="btn btn-success">31/08/2023 - 26/09/2023</div>
-                </div>
-
-                <div class="card-bloc d-flex justify-content-between align-items-center mt-1">
-                    <a href="#" class="card-title"> 
-                        Task 1 name Task name 
-                    </a>
-                    <div class="assigned"> 
-                        <div class="d-flex justify-content-end align-items-center">
-                            @auth
-                                <span class="owner">You</span>
-                            @endif
-                            <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
-                            <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-bloc d-flex justify-content-between align-items-center mt-1">
-                    <a href class="card-project d-flex align-items-center">
-                        <span>50%</span> 
-                        <progress class="project-progress" min="0" max="100" value="50"></progress>
-                    </a>
-                    <div class="actions"> 
-                        <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
-                        <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pj-card mb-4 d-flex flex-column align-items-center">
-
-                <div class="card-bloc d-flex justify-content-between align-items-center">
-                    <div class="creator"> 
-                        Created by: You 
-                    </div>
-                    <div class="btn btn-danger"> High </div>
-                    <div class="btn btn-success">31/08/2023 - 26/09/2023</div>
-                </div>
-
-                <div class="card-bloc d-flex justify-content-between align-items-center mt-1">
-                    <a href="#" class="card-title"> 
-                        Task 1 name Task name 
-                    </a>
-                    <div class="assigned"> 
-                        <div class="d-flex justify-content-end align-items-center">
-                            @auth
-                                <span class="owner">You</span>
-                            @endif
-                            <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
-                            <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-bloc d-flex justify-content-between align-items-center mt-1">
-                    <a href class="card-project d-flex align-items-center">
-                        <span>50%</span> 
-                        <progress class="project-progress" min="0" max="100" value="50"></progress>
-                    </a>
-                    <div class="actions"> 
-                        <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
-                        <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
-                    </div>
-                </div>
-            </div>
-
-
-
+        <div class="app-pagination">
+            {{ $projects->onEachSide(1)->withQueryString()->links('pagination.bootstrap-5') }}
         </div>
 
     </div>
 
+@endsection
+
+@section('script')
+    <script type="text/javascript"> 
+        const filterElements = document.querySelectorAll('.projectFilter');
+        filterElements.forEach(element => {
+            element.onclick = function(e){
+                e.preventDefault();
+                let selectedFilter = (e.target.getAttribute('href'));
+                let currentURL = window.location.href;
+                
+                if (!currentURL.includes('?')) {
+                    window.location = currentURL + '?filter=' + selectedFilter;
+
+                } else if (!currentURL.includes('filter')) {
+                    window.location = currentURL + '&filter=' + selectedFilter;
+
+                } else {
+                    if (!currentURL.includes(selectedFilter)) {
+                        window.location = currentURL.replace(/name|creator_id|priority|due_date/gi, selectedFilter);
+                    }
+                }            
+            }
+        });    
+    </script>
 @endsection

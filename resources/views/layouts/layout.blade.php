@@ -52,7 +52,7 @@
             <div class="options mt-4 d-flex flex-column align-items-center">
                 <div class="recent-tasks-label mb-2">Recent Tasks</div>
                 
-                <div class="card d-flex flex-column align-items-center mb-2 p-1">
+                <div class="side-card d-flex flex-column align-items-center mb-2 p-1">
 
                     <div class="card-bloc d-flex justify-content-between align-items-center">
                         <div class="date"> 
@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="card-bloc d-flex justify-content-between align-items-center my-1">
-                        <a href="#" class="card-title"> 
+                        <a href="#" class="cardTitle"> 
                             Task 1 name Task name 
                         </a>
                         <div class="assigned"> 
@@ -87,7 +87,7 @@
                     </div>
                 </div>
 
-                <div class="card d-flex flex-column align-items-center mb-2 p-1">
+                <div class="side-card d-flex flex-column align-items-center mb-2 p-1">
 
                     <div class="card-bloc d-flex justify-content-between align-items-center">
                         <div class="date"> 
@@ -98,7 +98,7 @@
                     </div>
 
                     <div class="card-bloc d-flex justify-content-between align-items-center my-1">
-                        <a href="#" class="card-title"> 
+                        <a href="#" class="cardTitle"> 
                             Task 1 name Task name 
                         </a>
                         <div class="assigned"> 
@@ -122,7 +122,7 @@
                     </div>
                 </div>
 
-                <div class="card d-flex flex-column align-items-center mb-2 p-1">
+                <div class="side-card d-flex flex-column align-items-center mb-2 p-1">
 
                     <div class="card-bloc d-flex justify-content-between align-items-center">
                         <div class="date"> 
@@ -133,7 +133,7 @@
                     </div>
 
                     <div class="card-bloc d-flex justify-content-between align-items-center my-1">
-                        <a href="#" class="card-title"> 
+                        <a href="#" class="cardTitle"> 
                             Task 1 name Task name 
                         </a>
                         <div class="assigned"> 
@@ -155,8 +155,7 @@
                             <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
                         </div>
                     </div>
-                </div>
-                
+                </div>                
    
             </div>
             
@@ -192,7 +191,7 @@
 
         </div>  
 
-        <main class="layout-main p-4">
+        <main class="layout-main px-4 pt-4 pb-2 h-100 w-100">
             @yield('content')
         </main>
 

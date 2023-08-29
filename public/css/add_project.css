@@ -24,7 +24,7 @@
 }
 .add-project .actions button, .add-project .actions a {
     font-size: calc(0.7rem + 0.6vw);
-    color: white;
+    color: white !important;
 }
 .add-project .actions button[type="reset"] {
     background-color: #FF8B20;
