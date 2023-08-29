@@ -116,8 +116,12 @@
                         <progress class="project-progress" min="0" max="100" value="50"></progress>
                     </div>
                     <div class="actions"> 
-                        <a href="{{route('user.projects.edit', ['id'=> $project->id])}}"><img src="{{asset('img/edit.png')}}" alt="modify icon" srcset=""></a>
-                        <a href="#"><img src="{{asset('img/delete.png')}}" alt="delete icon" srcset=""></a>
+                        <a href="{{ route('user.projects.edit', ['id'=> $project->id]) }}">
+                            <img src="{{asset('img/edit.png')}}" alt="modify icon" srcset="">
+                        </a>
+                        <a href="{{ route('user.projects.delete', ['id'=> $project->id]) }}" class="delete-action">
+                            <img src="{{asset('img/delete.png')}}" alt="delete icon" srcset="">
+                        </a>
                     </div>
                 </div>
             </div>
@@ -130,7 +134,7 @@
         </div>
 
     </div>
-
+    @include('components.delete')
 @endsection
 
 @section('script')
@@ -156,4 +160,6 @@
             }
         });    
     </script>
+
+    <script defer src="{{asset('js/delete.js')}}"></script>
 @endsection

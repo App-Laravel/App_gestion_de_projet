@@ -14,6 +14,8 @@ Route::prefix('user')->middleware('web')->name('user.')->group(function(){
 
         Route::get('/edit/{id?}', [ProjectController::class, 'edit'])->name('edit');
         Route::post('/edit', [ProjectController::class, 'postEdit'])->name('postEdit');
+
+        Route::delete('/delete/{id}', [ProjectController::class, 'delete'])->name('delete');
     });
     
 });

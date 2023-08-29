@@ -130,6 +130,24 @@ class ProjectController extends Controller
     }
 
 
+    // Delete a project
+    public function delete($id)
+    {
+        $project = checkProjectExistence($id);
+
+        if (!empty($project)) {
+            $project->users()->detach();
+            $status = $project->delete();
+
+            if ($status) {
+                return redirect()->route('user.projects.index')->with('msg', 'The project has been deleted.');
+            } else {
+                return redirect()->route('user.projects.index')->with('msg-error', 'The project could not be deleted. Please try again later.');
+            }  
+        }
+    }
+    
+
     // Method "paginate" on a Collection
     public function paginate($items, $perPage = 8, $page = null, $baseUrl = null, $options = [])
     {
