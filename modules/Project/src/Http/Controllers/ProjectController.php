@@ -10,19 +10,14 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Arr;
 
 class ProjectController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
+
 
     // Show the user's list of all projects.
     public function index(Request $request)
@@ -33,9 +28,12 @@ class ProjectController extends Controller
 
         // do query
         $participatedProjects = User::find(Auth::user()->id)->projects()->where('name', 'like', "%$keyword%")->get();
-        $createdProjects = Project::where('creator_id', Auth::user()->id)->where('name', 'like', "%$keyword%")->get();
+        $createdProjects = Project::where('creator_id', Auth::user()->id)->where(function($query) use($keyword) {
+                $query->where('name', 'like', "%$keyword%");
+                $query->orWhere('comment', 'like', "%$keyword%");
+        })->get();
         $projects = ($participatedProjects->concat($createdProjects))->unique();
-        
+
         // total of projects
         $total = $projects->count();
 
@@ -56,7 +54,7 @@ class ProjectController extends Controller
     }
 
 
-    // detail of a project
+    // show details of a project
     public function detail($id = null)
     {
         $project = checkProjectExistence($id);
@@ -80,7 +78,7 @@ class ProjectController extends Controller
     public function postAdd(Request $request)
     {
         $request->validate([
-            'name'      => ['required', 'string'],
+            'name'      => ['required', 'string', 'unique:projects,name'],
             'priority'  => ['required', 'integer', 'exists:projects'],
             'startdate' => ['required', 'date'],
             'duedate'   => ['required', 'date']            
@@ -114,7 +112,7 @@ class ProjectController extends Controller
     public function postEdit(Request $request)
     {
         $request->validate([
-            'name'      => ['required', 'string'],
+            'name'      => ['required', 'string', 'unique:projects,name,'.session('id')],
             'priority'  => ['required', 'integer', 'exists:projects'],
             'startdate' => ['required', 'date'],
             'duedate'   => ['required', 'date']            
@@ -128,9 +126,9 @@ class ProjectController extends Controller
             $status = $this->saveProject($request, $project);
 
             if ($status) {
-                return back()->with('msg', 'The project has been successfully updated.');
+                return redirect()->route('user.projects.edit', ['id'=>$projectID])->with('msg', 'The project has been successfully updated.');
             } else {
-                return back()->with('msg-error', 'The project could not be updated. Please try again later.');
+                return redirect()->route('user.projects.edit', ['id'=>$projectID])->with('msg-error', 'The project could not be updated. Please try again later.');
             } 
         }
         return view('client.home');        
@@ -143,14 +141,21 @@ class ProjectController extends Controller
         $project = checkProjectExistence($id);
 
         if (!empty($project)) {
-            $project->users()->detach();
-            $status = $project->delete();
 
-            if ($status) {
-                return redirect()->route('user.projects.index')->with('msg', 'The project has been deleted.');
+            if ($project->creator_id == Auth::user()->id) {
+                
+                $project->users()->detach();
+                $status = $project->delete();
+    
+                if ($status) {
+                    return redirect()->route('user.projects.index')->with('msg', 'The project has been deleted.');
+                } else {
+                    return redirect()->route('user.projects.index')->with('msg-error', 'The project could not be deleted. Please try again later.');
+                }
             } else {
-                return redirect()->route('user.projects.index')->with('msg-error', 'The project could not be deleted. Please try again later.');
-            }  
+                return back()->with('msg-error', 'The project can not be deleted. You are not the owner of the project.');
+            }
+              
         }
     }
 

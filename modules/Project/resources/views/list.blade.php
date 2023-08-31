@@ -14,11 +14,11 @@
             
             <div class="label d-flex flex-column align-items-start">
                 <div class="label-top d-flex">
-                    <img src="{{asset('img/rocket.png')}}" alt="" srcset="">
+                    <img src="{{asset('img/rocket.png')}}" alt="avatar rocket" >
                     <div>My Projects</div>
                 </div>
                 <div class="info-project">
-                    You have <span class="text-primary font-weight-bold">{{ $total }}</span> open projects
+                    You have <span class="text-primary font-weight-bold">{{ getProjectTotal() }}</span> open projects
                 </div>
             </div>
             <div class="functions w-100 d-flex nowrap justify-content-between">
@@ -26,12 +26,12 @@
                     <form action="" method="GET" class="w-100 d-flex align-items-center">
                         <label for="keyword" class="d-none"></label>
                         <input type="text" id="keyword" name="keyword" class="form-control w-100" value="{{old('keyword')}}" placeholder="Search...">
-                        <button type="submit"><img src="{{asset('img/search.png')}}" alt="search icon" srcset=""></button>
+                        <button type="submit"><img src="{{asset('img/search.png')}}" alt="search icon" ></button>
                     </form>
                 </div>
                 <div class="filter">
                     <div class="dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{{asset('img/filter.png')}}" alt="" srcset="">                        
+                            <img src="{{asset('img/filter.png')}}" alt="filter icon" >                        
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="projectFilter dropdown-item" href="name" >Name</a></li>                        
@@ -45,7 +45,7 @@
             
             <div class="add-project">
                 <a href="{{route('user.projects.add')}}" class="add btn btn-primary">
-                    <img src="{{asset('img/plus.png')}}" alt="" srcset="">
+                    <img src="{{asset('img/plus.png')}}" alt="add project icon" >
                     Project
                 </a>
             </div>
@@ -88,6 +88,9 @@
                                 @foreach (getCoworkers($project->id) as $user)
                                     @if (Auth::user()->id == $user->id)
                                         <span class="owner">You</span>
+                                        @php
+                                            $count++;
+                                        @endphp
                                     @endif                                                            
                                 @endforeach
                                 
@@ -96,8 +99,8 @@
                                         @php
                                             $count++;
                                         @endphp
-                                        @if ($count < 2)
-                                            <span class="member"><img src="{{ $user->avatar ? asset('storage'.$user->avatar) : asset('storage/uploads/avatar/user.png') }}" alt="avatar" srcset=""></span>                                                                                   
+                                        @if ($count < 3)
+                                            <span class="member"><img src="{{ $user->avatar ? asset('storage'.$user->avatar) : asset('storage/uploads/avatar/user.png') }}" alt="avatar" ></span>                                                                                   
                                         @endif                                        
                                     @endif                                                                                                     
                                 @endforeach
@@ -117,10 +120,10 @@
                     </div>
                     <div class="actions"> 
                         <a href="{{ route('user.projects.edit', ['id'=> $project->id]) }}">
-                            <img src="{{asset('img/edit.png')}}" alt="modify icon" srcset="">
+                            <img src="{{asset('img/edit.png')}}" alt="modify icon" >
                         </a>
                         <a href="{{ route('user.projects.delete', ['id'=> $project->id]) }}" class="delete-action">
-                            <img src="{{asset('img/delete.png')}}" alt="delete icon" srcset="">
+                            <img src="{{asset('img/delete.png')}}" alt="delete icon" >
                         </a>
                     </div>
                 </div>

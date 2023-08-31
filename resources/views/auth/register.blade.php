@@ -15,7 +15,6 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('sass/app.scss')}}">
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> --}}
     <link rel="stylesheet" type="text/css" href="{{asset('css/login.css')}}">
     <script type="text/javascript" defer src="{{asset('js/app.js')}}"></script>
@@ -32,7 +31,7 @@
 
             <form method="POST" action="{{ route('register') }}" class="d-flex flex-column col-7" enctype="multipart/form-data">
                 
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="name"> {{ __('Name') }} </label>
     
                     <div>
@@ -46,7 +45,7 @@
                     
                 </div>
     
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="email"> {{ __('Email Address') }} </label>
     
                     <div>
@@ -60,7 +59,7 @@
                     
                 </div>
     
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="password"> {{ __('Password') }} </label>
                     <div>
                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
@@ -73,7 +72,7 @@
                     </div>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="password-confirm"> {{ __('Confirm Password') }} </label>
 
                     <div>
@@ -81,13 +80,14 @@
                     </div>
                 </div>
                   
-                <div class="mb-3">
+                <div class="mb-2">
                     <label for="formFile">Select an avatar (optional)</label>
                     <input type="file" id="formFile" name="avatar" 
                             class="form-control @error('avatar') is-invalid @enderror 
                                                 @if (session('upload_error')) is-invalid @endif " 
                             lang="en"
-                            accept=".png, .jpg, .jpeg, .gif">
+                            accept=".png, .jpg, .jpeg, .gif"
+                            value="{{ old('avatar') }}">
                     
                     @error('avatar')
                         <span class="invalid-feedback" role="alert">
@@ -106,7 +106,7 @@
                         {{ __('Sign Up') }}
                 </button>
     
-                <h5 class="mt-5"> 
+                <h5 class="mt-4 have-account"> 
                     <span>Already have an account?</span> 
                     <a href="{{route('login')}}" class="link-offset-1 ">Sign in</a>
                 </h5>

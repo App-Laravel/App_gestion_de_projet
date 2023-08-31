@@ -1,5 +1,5 @@
 #layout {
-    width: 99.95vw !important;
+    width: 100vw;
     min-height: 100vh !important;
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -82,7 +82,7 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 5px;    
 
-    --fs-header: calc(0.1rem + 0.6vw);
+    --fs-header: calc(0.1rem + 0.5vw);
     --fs-title: calc(0.2rem + 0.7vw);
     --fs-sub-title: calc(0.15rem + 0.7vw);
     --btn-pd-x: 5px;
@@ -95,6 +95,7 @@
     --w-sub-title: 70%;
     --w-action: calc(var(--w-bloc) - var(--w-sub-title));
     --w-action-icon: calc(0.7rem + 0.18vw);
+    --co-inprogress: #FF9432;
 }
 .side-card .card-bloc {
     width: var(--w-bloc);
@@ -104,6 +105,10 @@
     font-size: var(--fs-header) !important;
     padding: var(--btn-pd-y) var(--btn-pd-x) !important;
     cursor: initial;
+}
+.side-card .card-bloc .inprogress {
+    background-color: var(--co-inprogress) !important;
+    color: white;
 }
 .side-card .cardTitle {
     width: var(--w-title);

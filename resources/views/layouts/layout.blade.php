@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Projects Management App" />
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -35,17 +36,17 @@
                 
                 <a href="{{route('user.projects.index')}}" class="options-item mb-2 d-flex align-items-center">
                     <span class="item-icon"><img src="{{asset('img/project.png')}}" alt="icon item sidebar" srcset=""></span>
-                    <div class="item-label">Projects(5)</div>
+                    <div class="item-label">Projects({{ getProjectTotal() }})</div>
                 </a>
 
                 <a href="{{route('user.tasks.index')}}" class="options-item mb-2 d-flex align-items-center">
                     <span class="item-icon"><img src="{{asset('img/to-do-list.png')}}" alt="icon item sidebar" srcset=""></span>
-                    <div class="item-label">Task(5)</div>
+                    <div class="item-label">Task(16)</div>
                 </a>
 
                 <a href="#" class="options-item mb-2 d-flex align-items-center">
                     <span class="item-icon"><img src="{{asset('img/delete.png')}}" alt="icon item sidebar" srcset=""></span>
-                    <div class="item-label">Trash(5)</div>
+                    <div class="item-label">Trash(0)</div>
                 </a>                   
             </div>
 
@@ -55,11 +56,11 @@
                 <div class="side-card d-flex flex-column align-items-center mb-2 p-1">
 
                     <div class="card-bloc d-flex justify-content-between align-items-center">
-                        <div class="date"> 
-                            Due date: 30/08/2023 
+                        <div class="date text-danger"> 
+                            Due date: 15/08/2023 
                         </div>
-                        <div class="btn btn-danger"> High </div>
-                        <div class="btn btn-primary">To do</div>
+                        <div class="btn btn-warning"> Medium </div>
+                        <div class="btn btn-warning inprogress">In progress</div>
                     </div>
 
                     <div class="card-bloc d-flex justify-content-between align-items-center my-1">
@@ -91,7 +92,7 @@
 
                     <div class="card-bloc d-flex justify-content-between align-items-center">
                         <div class="date"> 
-                            Due date: 30/08/2023 
+                            Due date: 31/08/2023 
                         </div>
                         <div class="btn btn-danger"> High </div>
                         <div class="btn btn-primary">To do</div>
@@ -99,12 +100,12 @@
 
                     <div class="card-bloc d-flex justify-content-between align-items-center my-1">
                         <a href="#" class="cardTitle"> 
-                            Task 1 name Task name 
+                            Task 2 name web design 
                         </a>
                         <div class="assigned"> 
                             <div class="ass-label"> Assigned to: </div> 
                             <div class="d-flex justify-content-end align-items-center">
-                                <span class="owner">You</span>
+                                {{-- <span class="owner">You</span> --}}
                                 <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
                                 <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
                             </div>
@@ -113,7 +114,7 @@
 
                     <div class="card-bloc d-flex justify-content-between align-items-center my-1">
                         <a href class="card-project"> 
-                            Belongs to Project
+                            Belongs to Project 2
                         </a>
                         <div class="actions"> 
                             <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
@@ -126,15 +127,15 @@
 
                     <div class="card-bloc d-flex justify-content-between align-items-center">
                         <div class="date"> 
-                            Due date: 30/08/2023 
+                            Due date: 30/09/2023 
                         </div>
-                        <div class="btn btn-danger"> High </div>
-                        <div class="btn btn-primary">To do</div>
+                        <div class="btn btn-secondary"> Low </div>
+                        <div class="btn btn-success">Done</div>
                     </div>
 
                     <div class="card-bloc d-flex justify-content-between align-items-center my-1">
                         <a href="#" class="cardTitle"> 
-                            Task 1 name Task name 
+                            Task 3 name Design App de gestion de projets 
                         </a>
                         <div class="assigned"> 
                             <div class="ass-label"> Assigned to: </div> 
@@ -148,7 +149,7 @@
 
                     <div class="card-bloc d-flex justify-content-between align-items-center my-1">
                         <a href class="card-project"> 
-                            Belongs to Project
+                            Belongs to Project 4
                         </a>
                         <div class="actions"> 
                             <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
@@ -225,7 +226,7 @@
 
         </div>  
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('script')
 </body>
 </html>

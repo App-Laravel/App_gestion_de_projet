@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -21,6 +23,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('client.home');
+        $projects = User::find(Auth::user()->id)->projects;
+        // total of projects
+        $total = $projects->count();
+
+        return view('client.home', compact('total'));
     }
 }

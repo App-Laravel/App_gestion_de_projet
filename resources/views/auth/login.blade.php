@@ -25,7 +25,7 @@
 
         <div class="login-form">
 
-            <h1 class="font-weight-bold text-align-center"> Sign In </h1>
+            <h1 class="login-label font-weight-bold text-align-center"> Sign In </h1>
 
             <form method="POST" action="{{ route('login') }}" class="d-flex flex-column col-7">  
     
@@ -57,7 +57,7 @@
                 </div>
     
                 <div class="row justify-content-between mb-4">
-                    <div class="col-5 mb-4 px-0 remember">
+                    <div class="col-5 px-0 remember">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
     

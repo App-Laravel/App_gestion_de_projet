@@ -18,6 +18,13 @@
             </thead>
             <tbody>
                 <tr>
+                    <td colspan="3">
+                        @if (session('msg-error'))
+                            <div class="alert alert-warning text-center"> {{ session('msg-error') }} </div>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
                     <td> Created by: </td>
                     <td>  
                         {{ getCreatorName($project->creator_id) }}
@@ -89,8 +96,8 @@
                                 Task 1 name Task name Task 1 name Task name
                             </a>
                             <div class="taskActions"> 
-                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
-                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
+                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="edit icon" ></a>
+                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="delete icon" ></a>
                             </div>
                         </div>
                     </div>
@@ -105,14 +112,14 @@
                                 Task 1 name Task name Task 1 name Task name
                             </a>
                             <div class="taskActions"> 
-                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
-                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
+                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="edit icon" ></a>
+                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="delete icon" ></a>
                             </div>
                         </div>
                     </div>
 
                     <a href="#" class="new-task mt-2 w-100 d-flex justify-content-center align-items-center">
-                        <img src="{{asset('img/plusblack.png')}}" alt="plus icon" srcset="">
+                        <img src="{{asset('img/plusblack.png')}}" alt="plus icon" >
                         <div>Add new task</div>
                     </a>
 
@@ -131,8 +138,8 @@
                                 Task 1 name Task name Task 1 name Task name
                             </a>
                             <div class="taskActions"> 
-                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
-                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
+                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="edit icon" ></a>
+                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="delete icon" ></a>
                             </div>
                         </div>
                     </div>
@@ -147,8 +154,8 @@
                                 Task 1 name Task name Task 1 name Task name
                             </a>
                             <div class="taskActions"> 
-                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
-                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
+                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="edit icon" ></a>
+                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="delete icon" ></a>
                             </div>
                         </div>
                     </div>
@@ -164,17 +171,17 @@
                             </a>
                             <div class="taskActions"> 
                                 <a href="#" >
-                                    <img src="{{asset('img/edit.png')}}" alt="" srcset="">
+                                    <img src="{{asset('img/edit.png')}}" alt="edit icon" >
                                 </a>
                                 <a href="#">
-                                    <img src="{{asset('img/delete.png')}}" alt="" srcset="">
+                                    <img src="{{asset('img/delete.png')}}" alt="delete icon" >
                                 </a>
                             </div>
                         </div>
                     </div>
 
                     <a href="#" class="new-task mt-2 w-100 d-flex justify-content-center align-items-center">
-                        <img src="{{asset('img/plusblack.png')}}" alt="plus icon" srcset="">
+                        <img src="{{asset('img/plusblack.png')}}" alt="plus icon" >
                         <div>Add new task</div>
                     </a>
                     
@@ -194,14 +201,14 @@
                                 Task 1 name Task name Task 1 name Task name
                             </a>
                             <div class="taskActions"> 
-                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
-                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
+                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="edit icon" ></a>
+                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="delete icon" ></a>
                             </div>
                         </div>
                     </div>
 
                     <a href="#" class="new-task mt-2 w-100 d-flex justify-content-center align-items-center">
-                        <img src="{{asset('img/plusblack.png')}}" alt="plus icon" srcset="">
+                        <img src="{{asset('img/plusblack.png')}}" alt="plus icon" >
                         <div>Add new task</div>
                     </a>
                     

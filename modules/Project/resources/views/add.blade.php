@@ -19,7 +19,7 @@
                     <label for="name"> {{ __('Name') }} </label>
     
                     <div>
-                        <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required placeholder="Name..." autocomplete="name" autofocus>
+                        <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required placeholder="Name of the project..." autocomplete="name" autofocus>
                         @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -34,9 +34,9 @@
                     <div>
                         <select name="priority" id="priority" class="form-select {{$errors->has('priority')? 'is-invalid' :''}}">
                             <option value="0">Select priority</option>
-                            <option value="1">High</option>
-                            <option value="2">Medium</option>
-                            <option value="3">Low</option>
+                            <option value="1" {{ old('priority') == 1 ? 'selected' : false}} >High</option>
+                            <option value="2" {{ old('priority') == 2 ? 'selected' : false}} >Medium</option>
+                            <option value="3" {{ old('priority') == 3 ? 'selected' : false}} >Low</option>
                         </select>
                         @error('priority')
                             <span class="invalid-feedback" role="alert">
@@ -76,7 +76,7 @@
                 <div class="mb-3">
                     <div class="d-flex justify-content-between">
                         <label> {{ __('Invite the coworkers') }} </label>
-                        <img class="add-email" src="{{asset('img/plus_color.png')}}" alt="" srcset="">
+                        <img class="add-email" src="{{asset('img/plus_color.png')}}" alt="plus icon">
                     </div>
                     
                     <div class="invites">
@@ -87,21 +87,17 @@
                 <div class="mb-3">
                     <label for="comment"> {{ __('Comment') }} </label>
                     <div>
-                        <textarea name="comment" id="comment" rows="4" class="form-control" placeholder="Comments..."></textarea>
+                        <textarea name="comment" id="comment" rows="3" class="form-control" placeholder="Comments..."> {{old('comment')}} </textarea>
                     </div>
                 </div>
     
                 <div class="actions d-flex justify-content-evenly">
     
-                    <button type="submit" class="btn btn-primary">
-                        {{ __('Create') }}
-                    </button>
+                    <button type="submit" class="btn btn-primary"> {{ __('Create') }} </button>
                     
-                    <button type="reset" class="btn btn-warning">
-                        {{ __('Reset') }}
-                    </button>
+                    <button type="reset" class="btn btn-warning">  {{ __('Reset') }}  </button>
                     
-                    <a href="{{route('user.projects.index')}}" class="btn btn-danger">{{ __('Cancel') }}</a>
+                    <a href="{{ route('user.projects.index') }}" type="button" class="btn btn-danger">{{ __('Cancel') }}</a>
     
                 </div>               
     

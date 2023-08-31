@@ -55,7 +55,7 @@ let count = 1;
 addEmail.onclick = () => {
     let inviteInputs = document.querySelectorAll('.invite');
     if (checkEmails(inviteInputs)) {
-        document.querySelector('.invites').appendChild(createInputItem(count));
+        document.querySelector('.invites:last-of-type').appendChild(createInputItem(count));
         count++;
 
         // check email

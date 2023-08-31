@@ -83,38 +83,43 @@
     
                 <div class="mb-3">
                     <div class="d-flex justify-content-between">
-                        <label for="invite"> {{ __('Invite the coworkers') }} </label>
-                        <img class="add-email" src="{{asset('img/plus_color.png')}}" alt="" srcset="">
+                        <label> {{ __('Invite the coworkers') }} </label>
+                        <img class="add-email" src="{{asset('img/plus_color.png')}}" alt="plus icon">
                     </div>
                     
-                    @foreach ($coworkers as $coworker)
+                    @if ($coworkers->count() > 0)
+                        @foreach ($coworkers as $coworker)
+                            <div class="invites">
+                                <input type="email" class="form-control invite" name="email[]" value="{{ old('email') ?? $coworker->email }}" autocomplete="email" placeholder="Email of coworkers...">
+                            </div>
+                        @endforeach
+                    @else
                         <div class="invites">
-                            <input id="invite" type="email" class="form-control invite" name="email[]" value="{{ old('email') ?? $coworker->email }}" autocomplete="email" placeholder="Email of coworkers...">
+                            <input type="email" class="form-control invite" name="email[]" value="{{ old('email') }}" autocomplete="email" placeholder="Email of coworkers...">
                         </div>
-                    @endforeach
+                    @endif
+
 
                 </div>
     
                 <div class="mb-3">
                     <label for="comment"> {{ __('Comment') }} </label>
                     <div>
-                        <textarea name="comment" id="comment" rows="4" class="form-control" placeholder="Comments...">{{ old('comment') ?? $project->comment }}</textarea>
+                        <textarea name="comment" id="comment" rows="3" class="form-control" placeholder="Comments...">{{ old('comment') ?? $project->comment }}</textarea>
                     </div>
                 </div>
     
                 <div class="actions d-flex justify-content-evenly">
     
-                    <button type="submit" class="btn btn-primary">
-                        {{ __('Modify') }}
-                    </button>                
+                    <button type="submit" class="btn btn-primary"> {{ __('Modify') }} </button>                
                     
-                    <a href="#" class="btn btn-danger">{{ __('Cancel') }}</a>
+                    <a href="{{ route('user.projects.index') }}" type="button" class="btn btn-danger">{{ __('Cancel') }}</a>
     
                 </div>
                 
     
                 @csrf
-                @method('POST')
+                @method('PUT')
             </form>
     
         </div>

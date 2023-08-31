@@ -173,7 +173,7 @@
 .project {
     --w-page: 90%;
     --fs-page: calc(0.55rem + 0.6vw);
-    --fs-priority: calc(0.3rem + 0.6vw); 
+    --fs-priority: calc(0.3rem + 0.6vw);
 }
 .project .project-name {
     text-align: center;
