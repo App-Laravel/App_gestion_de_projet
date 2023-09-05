@@ -1,0 +1,85 @@
+.add-project .add-form {
+    width: 50%;
+}
+.add-project .add-label {
+    font-size: calc(0.8rem + 1vw);
+    text-align: center;
+}
+.add-project label {
+    font-size: calc(0.4rem + 0.6vw);
+}
+.add-project input, .add-project textarea, .add-project select {
+    font-size: calc(0.55rem + 0.6vw);
+}
+
+/******************* Start : Dropdown for choosing members ***************/
+.add-project .assigned-members {
+    position: relative;
+    display: inline-block;
+}
+.add-project .dropbtn {
+    font-size: calc(0.55rem + 0.6vw);
+}
+.add-project .dropbtn-onclick {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+.add-project .dropdown-content {
+    display: none;
+    font-size: calc(0.55rem + 0.6vw);
+    width: 100%;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 7px;
+    position: absolute;
+    z-index: 1;
+    border-left: 2px black solid;
+    border-bottom: 1px rgb(51, 51, 51) solid;
+    border-right: 1px rgb(155, 155, 155) solid;
+    border-top: 1px rgb(155, 155, 155) solid;
+}
+.add-project .dropdown-content input {
+    width: calc(0.35rem + 0.6vw);
+    height: calc(0.35rem + 0.6vw);
+    margin-right: calc(0.1rem + 0.3vw);
+    vertical-align: -1px;
+}
+.add-project .dropdown-show {
+    display: block;
+}
+.add-project .dropdown-item {
+    padding: 2px calc(0.55rem + 0.6vw);
+}
+.add-project .dropdown-item:hover {
+    background-color: #2d88ff;
+    color: white;
+}
+/******************* End : Dropdown for choosing members ***************/
+
+.add-project input::placeholder, .add-project textarea::placeholder {
+    color: grey;
+}
+.add-project .status, .add-project .priority {
+    width: 30% !important;
+}
+.add-project .date {
+    width: 40% !important;
+}
+.add-project .add-email {
+    width: calc(0.5rem + 1vw);
+    height: calc(0.5rem + 1vw);
+    object-fit: cover;
+}
+.add-project .actions button, .add-project .actions a {
+    font-size: calc(0.7rem + 0.6vw);
+    color: white !important;
+}
+.add-project .actions button[type="reset"] {
+    background-color: #FF8B20;
+}
+.border-danger {
+    border: 2px solid red !important;
+}
+.border-success {
+    border: 2px solid rgb(1, 172, 1) !important;
+}

@@ -6,18 +6,33 @@
     grid-template-rows: 7vh auto 10vh;
 }
 
+#layout .btn-inprogress {
+    color: white !important;
+    background-color: #FF9432 !important;
+}
+
 #layout a, .container a {
     text-decoration: none;
     cursor: pointer;
     color: black;
 }
+.container-reset-password {
+    margin-top: 5rem;
+}
 .layout-main {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
+    width: auto;
+    height: auto;
 }
-
-.container-reset-password {
-    margin-top: 5rem;
+.errors {
+    width: 100%;
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(88, 88, 88);
+    font-weight: 600;
 }
 /*********************************************** sidebar *************************************************************/
 
@@ -91,11 +106,10 @@
     --w-title: 65%;
     --w-assigned: calc(var(--w-bloc) - var(--w-title));
     --w-avatar: calc(0.7rem + 0.23vw);
-    --fs-owner: calc(0.14rem + 0.23vw);
+    --fs-owner: calc(0.2rem + 0.23vw);
     --w-sub-title: 70%;
     --w-action: calc(var(--w-bloc) - var(--w-sub-title));
     --w-action-icon: calc(0.7rem + 0.18vw);
-    --co-inprogress: #FF9432;
 }
 .side-card .card-bloc {
     width: var(--w-bloc);
@@ -105,10 +119,6 @@
     font-size: var(--fs-header) !important;
     padding: var(--btn-pd-y) var(--btn-pd-x) !important;
     cursor: initial;
-}
-.side-card .card-bloc .inprogress {
-    background-color: var(--co-inprogress) !important;
-    color: white;
 }
 .side-card .cardTitle {
     width: var(--w-title);
@@ -121,13 +131,18 @@
     font-size: var(--fs-header);
     text-align: end;  
 }
-.side-card .owner {
+.side-card .owner, .side-card .ownerPlus {
     display: block;
     font-size: var(--fs-owner);
-    border: 1px solid blue;
     border-radius: 100%;
-    padding: 2px 1.5px 0 1.5px;
+    background-color: rgb(228, 226, 226);
+    color: black;
+    width: var(--w-avatar);
+    height: var(--w-avatar);
+    text-align: center;
+    padding-top: 3px;
 }
+
 .side-card .member {
     width: var(--w-avatar);
     height: var(--w-avatar);
@@ -142,6 +157,10 @@
     font-size: var(--fs-sub-title);
     font-weight: 600;
     color: rgb(77, 77, 77) !important;
+}
+.side-card .project-label {
+    text-decoration: underline;
+    font-weight: 500 !important;
 }
 .side-card .actions img {
     width: var(--w-action-icon);

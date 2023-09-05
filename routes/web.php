@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use UniSharp\LaravelFilemanager\Lfm;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,11 @@ Auth::routes();
 
 Route::prefix('user')->name('user.')->group(function(){
     Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::get('/edit-profile', [UserController::class, 'editProfile'])->name('editProfile');
+});
+
+// File Manager
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
 });

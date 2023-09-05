@@ -3,7 +3,7 @@
 @section('title', 'Edit Project')
     
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{asset('css/add_project.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/crud_project.css')}}">
 @endsection
 
 @section('content')
@@ -87,18 +87,28 @@
                         <img class="add-email" src="{{asset('img/plus_color.png')}}" alt="plus icon">
                     </div>
                     
-                    @if ($coworkers->count() > 0)
-                        @foreach ($coworkers as $coworker)
-                            <div class="invites">
-                                <input type="email" class="form-control invite" name="email[]" value="{{ old('email') ?? $coworker->email }}" autocomplete="email" placeholder="Email of coworkers...">
-                            </div>
+                    @if (old('email'))
+                        @foreach (old('email') as $item)
+                            @if (!empty($item))
+                                <div class="invites">
+                                    <input type="email" class="form-control invite" name="email[]" value="{{$item}}" autocomplete="email" placeholder="Email of coworkers...">
+                                </div>
+                            @endif                                                        
                         @endforeach
                     @else
-                        <div class="invites">
-                            <input type="email" class="form-control invite" name="email[]" value="{{ old('email') }}" autocomplete="email" placeholder="Email of coworkers...">
-                        </div>
+                        @if ($coworkers)                    
+                            @if ($coworkers->count() > 0)
+                                @foreach ($coworkers as $coworker)
+                                    <div class="invites">
+                                        <input type="email" class="form-control invite" name="email[]" value="{{ $coworker->email }}" autocomplete="email" placeholder="Email of coworkers...">
+                                    </div>
+                                @endforeach                    
+                            @endif
+                        @endif                        
                     @endif
-
+                    <div class="invites">
+                        <input type="email" class="form-control invite" name="email[]" autocomplete="email" placeholder="Email of coworkers...">
+                    </div>
 
                 </div>
     

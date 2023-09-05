@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Project\src\Models\Project;
+use Modules\Task\src\Models\Task;
 
 class User extends Authenticatable
 {
@@ -50,6 +51,15 @@ class User extends Authenticatable
             'users_projects',
             'user_id',
             'project_id'
+        )->withTimestamps();
+    }
+
+    public function tasks() {
+        return $this->belongsToMany(
+            Task::class,
+            'users_tasks',
+            'user_id',
+            'task_id'
         )->withTimestamps();
     }
 }

@@ -5,11 +5,49 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 // get project's total of authenticated user 
-function getProjectTotal() {
+function getProjects() {
     $participatedProjects = User::find(Auth::user()->id)->projects()->get();
     $createdProjects = Project::where('creator_id', Auth::user()->id)->get();
     $projects = ($participatedProjects->concat($createdProjects))->unique();
-    return $projects->count();
+    return $projects;
+}
+
+// get project's task "TODO" 
+function getProjectToDo($project = null) {
+    if (!empty($project)) {
+        return ($project->tasks()->where('status', 1)->get());
+    }
+    return null;
+}
+
+// get project's task "IN PROGRESS" 
+function getProjectInProgress($project = null) {
+    if (!empty($project)) {
+        return ($project->tasks()->where('status', 2)->get());
+    }
+    return null;
+}
+
+// get project's task "DONE" 
+function getProjectDone($project = null) {
+    if (!empty($project)) {
+        return ($project->tasks()->where('status', 3)->get());
+    }
+    return null;
+}
+
+// get project's advancement 
+function getProjectsAdvancement($project = null) {
+    if (!empty($project)) {
+        $total = $project->tasks()->get();
+        if ($total->count() > 0) {
+            $inprogess = getProjectInProgress($project);
+            $done = getProjectDone($project);
+            $advancement = (($inprogess->count())*0.5 + ($done->count())*1 )/($total->count());
+            return round($advancement, 2)*100;
+        }       
+    }
+    return 0;
 }
 
 // get the name of the project'S creator

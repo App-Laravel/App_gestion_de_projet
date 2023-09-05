@@ -37,7 +37,7 @@ class UserRequest extends FormRequest
             
             return [
                 'name' => ['required', 'string', 'max:255', new NameRule],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users', new EmailRule],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email', new EmailRule],
                 'password' => ['required', 'string', 'confirmed', Password::min(8)->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
                 'avatar'    => ['sometimes', 'image', 'mimes:png,jpg,jpeg,gif']
             ];

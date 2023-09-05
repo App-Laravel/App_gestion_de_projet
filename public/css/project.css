@@ -10,7 +10,7 @@
 }
 .projects .header {
     display: grid;
-    grid-template-columns: 3fr 5fr 2fr;
+    grid-template-columns: 30% 50% 20%;
     grid-template-rows: 100%;
 }
 .projects .header .label {
@@ -63,6 +63,7 @@
 }
 .projects .functions .dropdown-toggle {
     margin-top: 2px;
+    cursor: pointer;
 }
 .projects .functions .dropdown-toggle::after {
     display: none !important;
@@ -85,6 +86,11 @@
 }
 .projects .add-project img {
     width: var(--s-add);
+}
+.projects .no-found {
+    height: 50vh;
+    color: rgb(136, 136, 136);
+    font-weight: 600;
 }
 
 /********************************************* project card ************************************************************/
@@ -114,8 +120,8 @@
     width: var(--w-bloc);
     font-size: var(--fs-header);
 }
-.projects .pj-card .creator {
-    width: 45%;
+.projects .pj-card .status-date {
+    width: 55%;
 }
 .projects .pj-card .card-bloc .btn {
     font-size: var(--fs-header) !important;
@@ -145,10 +151,9 @@
     width: var(--w-avatar);
     height: var(--w-avatar);
     text-align: center;
-    padding-top: 3px;
+    padding-top: 3.5px;
 }
 .projects .pj-card .assigned img {
-    width: 100%;
     width: var(--w-avatar);
     height: var(--w-avatar);
     border-radius: 100%;

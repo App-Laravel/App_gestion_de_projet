@@ -3,7 +3,7 @@
 @section('title', 'Add Project')
     
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{asset('css/add_project.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/crud_project.css')}}">
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
                     <label for="name"> {{ __('Name') }} </label>
     
                     <div>
-                        <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required placeholder="Name of the project..." autocomplete="name" autofocus>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required placeholder="Name of the project..." autocomplete="name" autofocus>
                         @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -79,9 +79,19 @@
                         <img class="add-email" src="{{asset('img/plus_color.png')}}" alt="plus icon">
                     </div>
                     
-                    <div class="invites">
-                        <input type="email" class="form-control invite" name="email[]" autocomplete="email" placeholder="Email of coworkers...">
-                    </div>
+                    @if (old('email'))
+                        @foreach (old('email') as $item)                            
+                            <div class="invites">
+                                <input type="email" class="form-control invite" name="email[]" value="{{$item}}" autocomplete="email" placeholder="Email of coworkers...">
+                            </div>                            
+                        @endforeach
+                    @else                    
+                        <div class="invites">
+                            <input type="email" class="form-control invite" name="email[]" autocomplete="email" placeholder="Email of coworkers...">
+                        </div>
+                    @endif
+                    
+
                 </div>
     
                 <div class="mb-3">

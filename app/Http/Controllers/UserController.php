@@ -29,4 +29,19 @@ class UserController extends Controller
 
         return view('client.home', compact('total'));
     }
+
+    // user's profile
+    public function profile()
+    {
+        $user = Auth::user();
+
+        return view('client.profile', compact('user'));
+    }
+
+    public function editProfile()
+    {
+        $user = Auth::user();
+
+        return view('client.edit_profile', compact('user'));
+    }
 }

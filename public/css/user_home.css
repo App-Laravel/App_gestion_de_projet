@@ -4,3 +4,63 @@
     object-fit: cover;
     margin-right: 5px;
 }
+
+.profile {
+    --fs-title: calc(0.4rem + 0.7vw);
+    --w-modify: calc(0.6rem + 1.2vw);
+    --pd-row: calc(0.3rem + 0.8vw);
+
+    color: black !important;
+    font-size: var(--fs-title);   
+}
+.profile .profile-body {
+    width: 90%;
+}
+.profile .profile-photo {
+    width: 25%;
+}
+.profile .profile-table {
+    width: 65%;
+}
+.profile .photo {
+    width: 50%;
+    aspect-ratio: 1 / 1;
+    border: none;
+    border-radius: 100%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.profile .photo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    border-radius: inherit;
+}
+.profile .modify-icon {
+    width: var(--w-modify);
+    height: var(--w-modify);    
+    border-radius: 100%;
+    background-color: rgb(185, 229, 254);
+    margin-left: -1.5rem;
+}
+.profile .photo-modify {
+    height: 60%;
+    object-fit: fill;
+    margin-top: -1px;
+}
+
+.profile .name {
+    font-weight: 600;
+}
+.profile .edit-profile {
+    font-size: var(--fs-title) !important;
+    color: white !important; 
+}
+.profile .table {
+    background-color: white !important;
+}
+.profile .profile-table td {
+    padding: var(--pd-row);
+}
+.profile .row-stripe {
+    background-color: rgb(226, 225, 225);
+}

@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Rules\EmailRule;
 
 class ProjectController extends Controller
 {
@@ -60,11 +61,16 @@ class ProjectController extends Controller
         $project = checkProjectExistence($id);
         
         if (!empty($project)) {
+
+            $todo = getProjectToDo($project);
+            $inprogress = getProjectInProgress($project);
+            $done = getProjectDone($project);
+
             $coworkers = $project->users;
-            return view('Project::detail', compact('project', 'coworkers'));
+            return view('Project::detail', compact('project', 'coworkers', 'todo', 'inprogress', 'done'));
         }
 
-        return view('client.home');        
+        abort(404);  
     }
 
 
@@ -79,18 +85,18 @@ class ProjectController extends Controller
     {
         $request->validate([
             'name'      => ['required', 'string', 'unique:projects,name'],
-            'priority'  => ['required', 'integer', 'exists:projects'],
+            'priority'  => ['required', 'integer', 'exists:projects,priority'],
             'startdate' => ['required', 'date'],
-            'duedate'   => ['required', 'date']            
+            'duedate'   => ['required', 'date']                   
         ]);
         
         $project = new Project();
         $status = $this->saveProject($request, $project);
 
-        if ($status) {
-            return redirect()->route('user.projects.index')->with('msg', 'The project has been successfully created.');
+        if (!empty($status)) {
+            return redirect()->route('user.projects.index')->with('msg', trans('Project::messages.project-add-msg'));
         } else {
-            return redirect()->route('user.projects.index')->with('msg-error', 'The project could not be created. Please try again later.');
+            return redirect()->route('user.projects.index')->with('msg-error', trans('Project::messages.project-add-msg-error'));
         }
     }
 
@@ -104,7 +110,7 @@ class ProjectController extends Controller
             session(['id'=>$id]);
             return view('Project::edit', compact('project', 'coworkers'));
         }
-        return view('client.home');        
+        abort(404);        
     }
 
 
@@ -113,9 +119,9 @@ class ProjectController extends Controller
     {
         $request->validate([
             'name'      => ['required', 'string', 'unique:projects,name,'.session('id')],
-            'priority'  => ['required', 'integer', 'exists:projects'],
+            'priority'  => ['required', 'integer', 'exists:projects,priority'],
             'startdate' => ['required', 'date'],
-            'duedate'   => ['required', 'date']            
+            'duedate'   => ['required', 'date']         
         ]);
         
         $projectID = session('id');
@@ -125,18 +131,18 @@ class ProjectController extends Controller
             
             $status = $this->saveProject($request, $project);
 
-            if ($status) {
-                return redirect()->route('user.projects.edit', ['id'=>$projectID])->with('msg', 'The project has been successfully updated.');
+            if (!empty($status)) {
+                return redirect()->route('user.projects.edit', ['id'=>$projectID])->with('msg', trans('Project::messages.project-edit-msg'));
             } else {
-                return redirect()->route('user.projects.edit', ['id'=>$projectID])->with('msg-error', 'The project could not be updated. Please try again later.');
+                return redirect()->route('user.projects.edit', ['id'=>$projectID])->with('msg-error', trans('Project::messages.project-edit-msg-error'));
             } 
         }
-        return view('client.home');        
+        abort(404);        
     }
 
 
     // Delete a project
-    public function delete($id)
+    public function delete($id = null)
     {
         $project = checkProjectExistence($id);
 
@@ -144,16 +150,25 @@ class ProjectController extends Controller
 
             if ($project->creator_id == Auth::user()->id) {
                 
+                $projectTasks = $project->tasks;
+                // delete all tasks of the project
+                if ($projectTasks->count() > 0) {
+                    foreach ($projectTasks as $projectTask) {
+                        $projectTask->users()->detach();
+                        $projectTask->delete();
+                    }
+                }
+                
                 $project->users()->detach();
                 $status = $project->delete();
     
-                if ($status) {
-                    return redirect()->route('user.projects.index')->with('msg', 'The project has been deleted.');
+                if (!empty($status)) {
+                    return redirect()->route('user.projects.index')->with('msg', trans('Project::messages.project-delete-msg'));
                 } else {
-                    return redirect()->route('user.projects.index')->with('msg-error', 'The project could not be deleted. Please try again later.');
+                    return redirect()->route('user.projects.index')->with('msg-error', trans('Project::messages.project-delete-msg-error'));
                 }
             } else {
-                return back()->with('msg-error', 'The project can not be deleted. You are not the owner of the project.');
+                return back()->with('msg-error', trans('Project::messages.project-delete-owner-msg-error'));
             }
               
         }
@@ -178,16 +193,19 @@ class ProjectController extends Controller
 
 
     // get user ID from email
-    public function getUserID (array $emails) : array
+    public function getUserID (array $emails = []) : array
     {
         $userIDs = [];
         if (!empty($emails)) {
             foreach ($emails as $email) {
-                $userID = User::select('id')->where('email', $email)->first();
-                if (!empty($userID)) {
-                    $userIDs[] = $userID->id;
+                if (!empty($email)) {
+                    $userID = User::select('id')->where('email', $email)->first();
+                    if (!empty($userID)) {
+                        $userIDs[] = $userID->id;
+                    }
                 }
-            }
+            }            
+            $userIDs = array_unique($userIDs);
         }
         return $userIDs;
     }
@@ -203,6 +221,7 @@ class ProjectController extends Controller
         $project->priority = $request->priority ?? 1;
         $project->start_date = $request->startdate ?? now();
         $project->due_date = $request->duedate ?? now();
+        
         if ($request->route()->uri == 'user/projects/add') {
             $project->creator_id = Auth::user()->id;
         }
@@ -210,6 +229,7 @@ class ProjectController extends Controller
         $status = $project->save();
 
         if ($request->route()->uri == 'user/projects/add') {
+            // create ids on intermediate table
             $project->users()->attach($coworkers, ['created_at'=>now(), 'updated_at'=>now()]);
         } else {
             // update ids on intermediate table

@@ -35,128 +35,100 @@
                 <div class="items-label mb-3">Boards</div>
                 
                 <a href="{{route('user.projects.index')}}" class="options-item mb-2 d-flex align-items-center">
-                    <span class="item-icon"><img src="{{asset('img/project.png')}}" alt="icon item sidebar" srcset=""></span>
-                    <div class="item-label">Projects({{ getProjectTotal() }})</div>
+                    <span class="item-icon"><img src="{{asset('img/project.png')}}" alt="icon item sidebar" ></span>
+                    <div class="item-label">Projects({{ getProjects()->count() }})</div>
                 </a>
 
                 <a href="{{route('user.tasks.index')}}" class="options-item mb-2 d-flex align-items-center">
-                    <span class="item-icon"><img src="{{asset('img/to-do-list.png')}}" alt="icon item sidebar" srcset=""></span>
-                    <div class="item-label">Task(16)</div>
+                    <span class="item-icon"><img src="{{asset('img/to-do-list.png')}}" alt="icon item sidebar" ></span>
+                    <div class="item-label">Task({{ getTasks()->count() }})</div>
                 </a>
 
-                <a href="#" class="options-item mb-2 d-flex align-items-center">
-                    <span class="item-icon"><img src="{{asset('img/delete.png')}}" alt="icon item sidebar" srcset=""></span>
+                <a href="#" class="options-item mb-2 d-flex align-items-center d-none">
+                    <span class="item-icon"><img src="{{asset('img/delete.png')}}" alt="icon item sidebar" ></span>
                     <div class="item-label">Trash(0)</div>
                 </a>                   
             </div>
 
             <div class="options mt-4 d-flex flex-column align-items-center">
                 <div class="recent-tasks-label mb-2">Recent Tasks</div>
-                
-                <div class="side-card d-flex flex-column align-items-center mb-2 p-1">
 
-                    <div class="card-bloc d-flex justify-content-between align-items-center">
-                        <div class="date text-danger"> 
-                            Due date: 15/08/2023 
-                        </div>
-                        <div class="btn btn-warning"> Medium </div>
-                        <div class="btn btn-warning inprogress">In progress</div>
-                    </div>
+                @if (!empty(getRecentTasks(3)))
+                    @foreach (getRecentTasks(3) as $task)
+                        <div class="side-card d-flex flex-column align-items-center mb-2 p-1">
 
-                    <div class="card-bloc d-flex justify-content-between align-items-center my-1">
-                        <a href="#" class="cardTitle"> 
-                            Task 1 name Task name 
-                        </a>
-                        <div class="assigned"> 
-                            <div class="ass-label"> Assigned to: </div> 
-                            <div class="d-flex justify-content-end align-items-center">
-                                <span class="owner">You</span>
-                                <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
-                                <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
+                            <div class="card-bloc d-flex align-items-center">
+                                <div class="w-50 d-flex">
+                                    <span> Due date:  &nbsp;</span>
+                                    <div class=" {{ ($task->due_date < now()) ? 'text-danger' : 'text-success' }}"> 
+                                        {{ dateDisplay($task->due_date) }}
+                                    </div>
+                                </div>
+                                <div class="w-50 d-flex justify-content-between">
+                                    <div class="btn {{ getPriorityClass($task->priority) }}"> {{ getPriority($task->priority) }} </div>
+                                    <div class="btn {{ getStatusClass($task->status) }}"> {{ getStatus($task->status) }} </div>
+                                </div>                                
                             </div>
-                        </div>
-                    </div>
+        
+                            <div class="card-bloc d-flex justify-content-between align-items-center my-1">
+                                <a href="{{ route('user.tasks.detail', ['id'=>$task->id])}}" class="cardTitle"> 
+                                    {{ $task->title }}
+                                </a>
+                                <div class="assigned"> 
+                                    <div class="ass-label"> Assigned to: </div> 
+                                    <div class="d-flex justify-content-end align-items-center">
+                                        
+                                        @if (($task->users)->count() > 0)
+                                            @php
+                                                $count = 0;
+                                            @endphp
+                                            @foreach ($task->users as $user)
+                                                @if (Auth::user()->id == $user->id)
+                                                    <span class="owner">You</span>
+                                                    @php
+                                                        $count++;
+                                                    @endphp
+                                                @endif                                                            
+                                            @endforeach
+                                            
+                                            @foreach ($task->users as $user)
+                                                @if (Auth::user()->id != $user->id)
+                                                    @php
+                                                        $count++;
+                                                    @endphp
+                                                    @if ($count < 3)
+                                                        <span class="member"><img src="{{ $user->avatar ? asset('storage'.$user->avatar) : asset('storage/uploads/avatar/user.png') }}" alt="avatar" ></span>                                                                                   
+                                                    @endif                                        
+                                                @endif                                                                                                     
+                                            @endforeach
 
-                    <div class="card-bloc d-flex justify-content-between align-items-center my-1">
-                        <a href class="card-project"> 
-                            Belongs to Project
-                        </a>
-                        <div class="actions"> 
-                            <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
-                            <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="side-card d-flex flex-column align-items-center mb-2 p-1">
-
-                    <div class="card-bloc d-flex justify-content-between align-items-center">
-                        <div class="date"> 
-                            Due date: 31/08/2023 
-                        </div>
-                        <div class="btn btn-danger"> High </div>
-                        <div class="btn btn-primary">To do</div>
-                    </div>
-
-                    <div class="card-bloc d-flex justify-content-between align-items-center my-1">
-                        <a href="#" class="cardTitle"> 
-                            Task 2 name web design 
-                        </a>
-                        <div class="assigned"> 
-                            <div class="ass-label"> Assigned to: </div> 
-                            <div class="d-flex justify-content-end align-items-center">
-                                {{-- <span class="owner">You</span> --}}
-                                <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
-                                <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
+                                            @if ($task->users->count() > 2)
+                                                <span class="ownerPlus">+{{$task->users->count() - 2}}</span>
+                                            @endif
+                                        @endif
+                                        
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="card-bloc d-flex justify-content-between align-items-center my-1">
-                        <a href class="card-project"> 
-                            Belongs to Project 2
-                        </a>
-                        <div class="actions"> 
-                            <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
-                            <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="side-card d-flex flex-column align-items-center mb-2 p-1">
-
-                    <div class="card-bloc d-flex justify-content-between align-items-center">
-                        <div class="date"> 
-                            Due date: 30/09/2023 
-                        </div>
-                        <div class="btn btn-secondary"> Low </div>
-                        <div class="btn btn-success">Done</div>
-                    </div>
-
-                    <div class="card-bloc d-flex justify-content-between align-items-center my-1">
-                        <a href="#" class="cardTitle"> 
-                            Task 3 name Design App de gestion de projets 
-                        </a>
-                        <div class="assigned"> 
-                            <div class="ass-label"> Assigned to: </div> 
-                            <div class="d-flex justify-content-end align-items-center">
-                                <span class="owner">You</span>
-                                <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
-                                <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
+        
+                            <div class="card-bloc d-flex justify-content-between align-items-center mt-1">
+                                <div class="card-project d-flex align-items-start">
+                                    <span class="project-label">Project:</span> 
+                                    <a href="{{ route('user.projects.detail', ['id'=>$task->project->id]) }}" class="text-secondary"> &nbsp; {{ $task->project->name}} </a>
+                                </div>
+                                <div class="actions"> 
+                                    <a href="{{ route('user.tasks.edit', ['id'=> $task->id]) }}">
+                                        <img src="{{asset('img/edit.png')}}" alt="modify icon" >
+                                    </a>
+                                    <a href="{{ route('user.tasks.delete', ['id'=> $task->id]) }}" class="delete-action">
+                                        <img src="{{asset('img/delete.png')}}" alt="delete icon" >
+                                    </a>
+                                </div>
                             </div>
+                            
                         </div>
-                    </div>
-
-                    <div class="card-bloc d-flex justify-content-between align-items-center my-1">
-                        <a href class="card-project"> 
-                            Belongs to Project 4
-                        </a>
-                        <div class="actions"> 
-                            <a href="#"><img src="{{asset('img/edit.png')}}" alt="" srcset=""></a>
-                            <a href="#"><img src="{{asset('img/delete.png')}}" alt="" srcset=""></a>
-                        </div>
-                    </div>
-                </div>                
+                    @endforeach
+                @endif              
    
             </div>
             
@@ -172,11 +144,11 @@
             <div class="dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class='user-icon'>
                     <span class="username">{{ ucwords(Auth::user()->name) }}</span> 
-                    <span class="member"><img src="{{asset('img/man.png')}}" alt="" srcset=""></span>
+                    <span class="member"><img src="{{asset('img/man.png')}}" alt="" ></span>
                 </span>
             </div>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Profil</a></li>
+                <li><a class="dropdown-item" href="{{ route('user.profile') }}">Profil</a></li>
                 <li><a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();"
@@ -201,16 +173,16 @@
             <div class="actions d-flex justify-content-between align-items-center w-100 h-100">
                 
                 <div class="footer-menu w-75 d-flex justify-content-evenly">
-                    <a href="{{route('user.projects.index')}}" class="menu-items">
-                        <img src="{{asset('img/project-white.png')}}" alt="" srcset="">
+                    <a href="{{ route('user.projects.index') }}" class="menu-items">
+                        <img src="{{asset('img/project-white.png')}}" alt="project icon" >
                         <span>ALL PROJECTS</span> 
                     </a>
-                    <a href="#" class="menu-items">
-                        <img src="{{asset('img/to-do-list-white.png')}}" alt="" srcset="">
+                    <a href="{{ route('user.tasks.index') }}" class="menu-items">
+                        <img src="{{asset('img/to-do-list-white.png')}}" alt="task icon" >
                         <span>ALL TASKS </span> 
                     </a>
                     <a href="{{url('/')}}" class="menu-items">
-                        <img src="{{asset('img/home.png')}}" alt="" srcset="">
+                        <img src="{{asset('img/home.png')}}" alt="home icon" >
                         <span>HOME</span>
                     </a>
                 </div>
@@ -226,7 +198,14 @@
 
         </div>  
     </div>
+
+    @include('components.delete')
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('script')
+
+    <script defer src="{{asset('js/delete_task.js')}}"></script>
+    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+
 </body>
 </html>

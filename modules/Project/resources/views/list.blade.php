@@ -18,7 +18,7 @@
                     <div>My Projects</div>
                 </div>
                 <div class="info-project">
-                    You have <span class="text-primary font-weight-bold">{{ getProjectTotal() }}</span> open projects
+                    You have <span class="text-primary font-weight-bold">{{ getProjects()->count() }}</span> open projects
                 </div>
             </div>
             <div class="functions w-100 d-flex nowrap justify-content-between">
@@ -62,19 +62,24 @@
 
         <div class="cards w-100 mt-4 px-4 d-flex justify-content-between flex-wrap">
 
+            @if ($projects->count() > 0)
+
             @foreach ($projects as $project)               
             
             <div class="pj-card mb-4 d-flex flex-column align-items-center">
 
                 <div class="card-bloc d-flex justify-content-between align-items-center">
-                    <div class="creator"> 
+                    <div>
                         Created by: {{ getCreatorName($project->creator_id) }} 
                     </div>
-                    <div class="btn {{ getPriorityClass($project->priority) }}"> {{ getPriority($project->priority) }} </div>
-                    <div class="btn {{ ($project->due_date < now()) ? 'btn-danger' : 'btn-success' }}">{{ dateDisplay($project->start_date) }} - {{ dateDisplay($project->due_date) }}</div>
+                    <div class="status-date d-flex justify-content-between">
+                        <div class="btn {{ getPriorityClass($project->priority) }}"> {{ getPriority($project->priority) }} </div>
+                        <div class="btn {{ ($project->due_date < now()) ? 'btn-danger' : 'btn-success' }}">{{ dateDisplay($project->start_date) }} - {{ dateDisplay($project->due_date) }}</div>
+                    </div>
+                    
                 </div>
 
-                <div class="card-bloc d-flex justify-content-between align-items-center mt-1">
+                <div class="card-bloc d-flex justify-content-between align-items-center my-1 flex-grow-1">
                     <a href="{{route('user.projects.detail', ['id'=>$project->id])}}" class="card-title"> 
                         {{ ucfirst($project->name) }}
                     </a>
@@ -115,8 +120,9 @@
 
                 <div class="card-bloc d-flex justify-content-between align-items-center mt-1">
                     <div class="card-project d-flex align-items-center">
-                        <span>50%</span> 
-                        <progress class="project-progress" min="0" max="100" value="50"></progress>
+                        <div class="progress w-50">
+                            <div class="progress-bar" style="width: {{ (getProjectsAdvancement($project)).'%' }}" role="progressbar" aria-valuenow=" {{ getProjectsAdvancement($project) }}" aria-valuemin="0" aria-valuemax="100">{{ (getProjectsAdvancement($project)).'%' }}</div>
+                          </div>
                     </div>
                     <div class="actions"> 
                         <a href="{{ route('user.projects.edit', ['id'=> $project->id]) }}">
@@ -130,6 +136,10 @@
             </div>
 
             @endforeach
+            
+            @else
+                <h3 class="no-found w-100 d-flex justify-content-center align-items-center"> NO PROJECT FOUND </h3>
+            @endif
         </div>
 
         <div class="app-pagination">
@@ -164,5 +174,5 @@
         });    
     </script>
 
-    <script defer src="{{asset('js/delete.js')}}"></script>
+    <script defer src="{{asset('js/delete_project.js')}}"></script>
 @endsection

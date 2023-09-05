@@ -5,6 +5,7 @@ namespace Modules\Project\src\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Task\src\Models\Task;
 
 class Project extends Model
 {
@@ -21,5 +22,13 @@ class Project extends Model
             'project_id',
             'user_id'            
         )->withTimestamps();
+    }
+
+    public function tasks() {
+        return $this->hasMany(
+            Task::class,
+            'project_id',
+            'id'          
+        );
     }
 }

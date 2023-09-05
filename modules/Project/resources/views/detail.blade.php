@@ -19,8 +19,12 @@
             <tbody>
                 <tr>
                     <td colspan="3">
+                        @if (session('msg'))
+                            <div class="alert alert-success text-center" role="alert"> {{ session('msg') }} </div>
+                        @endif
+                
                         @if (session('msg-error'))
-                            <div class="alert alert-warning text-center"> {{ session('msg-error') }} </div>
+                            <div class="alert alert-warning text-center" role="alert"> {{ session('msg-error') }} </div>
                         @endif
                     </td>
                 </tr>
@@ -86,140 +90,110 @@
                 <div class="todo">
                     <div class="taskTitle w-100">TO DO</div>
                     
-                    <div class="p-card w-100 mb-1 p-1">
-                        <div class="card-bloc d-flex justify-content-between align-items-center">
-                            <div class="date"> Due date: 30/08/2023 </div>
-                            <div class="btn btn-danger"> High </div>
-                        </div>    
-                        <div class="card-bloc d-flex justify-content-between align-items-center">
-                            <a href="#" class="card-title"> 
-                                Task 1 name Task name Task 1 name Task name
-                            </a>
-                            <div class="taskActions"> 
-                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="edit icon" ></a>
-                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="delete icon" ></a>
-                            </div>
-                        </div>
-                    </div>
+                    @if ($todo->count() > 0)
+                        @foreach ($todo as $item)
+                            <div class="p-card w-100 mb-1 p-1">
+                                <div class="card-bloc d-flex justify-content-between align-items-center">
+                                    <div class="date"> Due date: {{ dateDisplay($item->due_date) }} </div>
+                                    <div class="btn {{ getPriorityClass($item->priority) }} ">{{ getPriority($item->priority) }}</div>
+                                </div>    
+                                <div class="card-bloc d-flex justify-content-between align-items-center">
+                                    <a href="{{ route('user.tasks.detail', ['id'=>$item->id])}}" class="card-title"> 
+                                        {{ ucfirst($item->title) }}
+                                    </a>
+                                    <div class="taskActions"> 
+                                        <a href="{{ route('user.tasks.edit', ['id'=>$item->id])}}">
+                                            <img src="{{asset('img/edit.png')}}" alt="edit icon" >
+                                        </a>
+                                        <a href="{{ route('user.tasks.delete-in-project', ['id'=> $item->id]) }}" class="delete-action">
+                                            <img src="{{asset('img/delete.png')}}" alt="delete icon" >
+                                        </a>                                    
+                                    </div>
+                                </div>
+                            </div> 
+                        @endforeach                        
+                    @endif
 
-                    <div class="p-card w-100 mb-1 p-1">
-                        <div class="card-bloc d-flex justify-content-between align-items-center">
-                            <div class="date"> Due date: 30/08/2023 </div>
-                            <div class="btn btn-danger"> High </div>
-                        </div>    
-                        <div class="card-bloc d-flex justify-content-between align-items-center">
-                            <a href="#" class="card-title"> 
-                                Task 1 name Task name Task 1 name Task name
-                            </a>
-                            <div class="taskActions"> 
-                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="edit icon" ></a>
-                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="delete icon" ></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a href="#" class="new-task mt-2 w-100 d-flex justify-content-center align-items-center">
+                    <a href="{{ route('user.tasks.add') }}" class="new-task mt-2 w-100 d-flex justify-content-center align-items-center">
                         <img src="{{asset('img/plusblack.png')}}" alt="plus icon" >
                         <div>Add new task</div>
                     </a>
-
                 </div>
 
                 <div class="inprogress">
                     <div class="taskTitle w-100">IN PROGRESS</div>
                     
-                    <div class="p-card w-100 mb-1 p-1">
-                        <div class="card-bloc d-flex justify-content-between align-items-center">
-                            <div class="date"> Due date: 30/08/2023 </div>
-                            <div class="btn btn-danger"> High </div>
-                        </div>    
-                        <div class="card-bloc d-flex justify-content-between align-items-center">
-                            <a href="#" class="card-title"> 
-                                Task 1 name Task name Task 1 name Task name
-                            </a>
-                            <div class="taskActions"> 
-                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="edit icon" ></a>
-                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="delete icon" ></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-card w-100 mb-1 p-1">
-                        <div class="card-bloc d-flex justify-content-between align-items-center">
-                            <div class="date"> Due date: 30/08/2023 </div>
-                            <div class="btn btn-danger"> High </div>
-                        </div>    
-                        <div class="card-bloc d-flex justify-content-between align-items-center">
-                            <a href="#" class="card-title"> 
-                                Task 1 name Task name Task 1 name Task name
-                            </a>
-                            <div class="taskActions"> 
-                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="edit icon" ></a>
-                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="delete icon" ></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-card w-100 mb-1 p-1">
-                        <div class="card-bloc d-flex justify-content-between align-items-center">
-                            <div class="date"> Due date: 30/08/2023 </div>
-                            <div class="btn btn-danger"> High </div>
-                        </div>    
-                        <div class="card-bloc d-flex justify-content-between align-items-center">
-                            <a href="#" class="card-title"> 
-                                Task 1 name Task name Task 1 name Task name
-                            </a>
-                            <div class="taskActions"> 
-                                <a href="#" >
-                                    <img src="{{asset('img/edit.png')}}" alt="edit icon" >
-                                </a>
-                                <a href="#">
-                                    <img src="{{asset('img/delete.png')}}" alt="delete icon" >
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a href="#" class="new-task mt-2 w-100 d-flex justify-content-center align-items-center">
+                    @if ($inprogress->count() > 0)
+                        @foreach ($inprogress as $item)
+                            <div class="p-card w-100 mb-1 p-1">
+                                <div class="card-bloc d-flex justify-content-between align-items-center">
+                                    <div class="date"> Due date: {{ dateDisplay($item->due_date) }} </div>
+                                    <div class="btn {{ getPriorityClass($item->priority) }} ">{{ getPriority($item->priority) }}</div>
+                                </div>    
+                                <div class="card-bloc d-flex justify-content-between align-items-center">
+                                    <a href="{{ route('user.tasks.detail', ['id'=>$item->id])}}" class="card-title"> 
+                                        {{ ucfirst($item->title) }}
+                                    </a>
+                                    <div class="taskActions"> 
+                                        <a href="{{ route('user.tasks.edit', ['id'=>$item->id])}}">
+                                            <img src="{{asset('img/edit.png')}}" alt="edit icon" >
+                                        </a>
+                                        <a href="{{ route('user.tasks.delete-in-project', ['id'=> $item->id]) }}" class="delete-action">
+                                            <img src="{{asset('img/delete.png')}}" alt="delete icon" >
+                                        </a>                                    
+                                    </div>
+                                </div>
+                            </div> 
+                        @endforeach                        
+                    @endif
+                    
+                    <a href="{{ route('user.tasks.add') }}" class="new-task mt-2 w-100 d-flex justify-content-center align-items-center">
                         <img src="{{asset('img/plusblack.png')}}" alt="plus icon" >
                         <div>Add new task</div>
                     </a>
-                    
-                    
                 </div>
 
                 <div class="done">
                     <div class="taskTitle w-100">DONE</div>
                     
-                    <div class="p-card w-100 mb-1 p-1">
-                        <div class="card-bloc d-flex justify-content-between align-items-center">
-                            <div class="date"> Due date: 30/08/2023 </div>
-                            <div class="btn btn-danger"> High </div>
-                        </div>    
-                        <div class="card-bloc d-flex justify-content-between align-items-center">
-                            <a href="#" class="card-title"> 
-                                Task 1 name Task name Task 1 name Task name
-                            </a>
-                            <div class="taskActions"> 
-                                <a href="#"><img src="{{asset('img/edit.png')}}" alt="edit icon" ></a>
-                                <a href="#"><img src="{{asset('img/delete.png')}}" alt="delete icon" ></a>
-                            </div>
-                        </div>
-                    </div>
+                    @if ($done->count() > 0)
+                        @foreach ($done as $item)
+                            <div class="p-card w-100 mb-1 p-1">
+                                <div class="card-bloc d-flex justify-content-between align-items-center">
+                                    <div class="date"> Due date: {{ dateDisplay($item->due_date) }} </div>
+                                    <div class="btn {{ getPriorityClass($item->priority) }} ">{{ getPriority($item->priority) }}</div>
+                                </div>    
+                                <div class="card-bloc d-flex justify-content-between align-items-center">
+                                    <a href="{{ route('user.tasks.detail', ['id'=>$item->id])}}" class="card-title"> 
+                                        {{ ucfirst($item->title) }}
+                                    </a>
+                                    <div class="taskActions"> 
+                                        <a href="{{ route('user.tasks.edit', ['id'=>$item->id])}}">
+                                            <img src="{{asset('img/edit.png')}}" alt="edit icon" >
+                                        </a>
+                                        <a href="{{ route('user.tasks.delete-in-project', ['id'=> $item->id]) }}" class="delete-action">
+                                            <img src="{{asset('img/delete.png')}}" alt="delete icon" >
+                                        </a>                                    
+                                    </div>
+                                </div>
+                            </div> 
+                        @endforeach                        
+                    @endif
 
-                    <a href="#" class="new-task mt-2 w-100 d-flex justify-content-center align-items-center">
+                    <a href="{{ route('user.tasks.add') }}" class="new-task mt-2 w-100 d-flex justify-content-center align-items-center">
                         <img src="{{asset('img/plusblack.png')}}" alt="plus icon" >
                         <div>Add new task</div>
-                    </a>
-                    
-                    
+                    </a>                    
                 </div>
+
             </div>
         </div>
 
     </div>
+
     @include('components.delete')
 @endsection
+
 @section('script')
-    <script defer src="{{asset('js/delete.js')}}"></script>
+    <script defer src="{{asset('js/delete_task.js')}}"></script>
 @endsection
