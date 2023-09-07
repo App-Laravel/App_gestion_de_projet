@@ -51,51 +51,25 @@ class RegisterController extends Controller
         return User::create([
             'name'      => $data['name'],
             'email'     => $data['email'],
-            'password'  => Hash::make($data['password']),
-            'avatar'    => $data['avatar'],
+            'password'  => Hash::make($data['password'])
         ]);
     }
 
     // register an user in database
-    public function register(UserRequest $userRequest)
+    public function register(UserRequest $request)
     {
-        $userData = request()->all();
-        $userData['avatar'] = $this->storeAvatar();
+        $userData = $request->all();
 
         event(new Registered($user = $this->create($userData)));
 
-        $this->guard()->login($user);
+        // $this->guard()->login($user);
 
-        if ($response = $this->registered(request(), $user)) {
+        if ($response = $this->registered($request, $user)) {
             return $response;
         }
 
         return request()->wantsJson()
                     ? new JsonResponse([], 201)
                     : redirect($this->redirectPath());
-    }
-
-    // Store avatar image into storage/app/public which is linked to public folder
-    // and return the link which will be saved in database
-    public function storeAvatar()
-    {
-        if (request()->hasFile('avatar')) {
-            
-            // check if file upload is successful
-            if (request()->avatar->isValid()) {
-                $file = request()->avatar;
-
-                $fileName = time().'_'.request()->avatar->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/avatar', $fileName, 'public');
-
-                $filePath = str_replace('/', DIRECTORY_SEPARATOR, $filePath);
-                return DIRECTORY_SEPARATOR.$filePath;
-
-            } else {
-                return back()->withInput()->with('upload_error', 'The file upload was not successful.');
-            }
-        }
-    
-        return null;
     }
 }

@@ -82,7 +82,7 @@
                     </div>
                 </div>
 
-                <div class="card-bloc d-flex justify-content-between align-items-center my-1 flex-grow-1">
+                <div class="card-bloc d-flex justify-content-between align-items-center mt-3 mb-1 flex-grow-1">
                     <a href="{{route('user.tasks.detail', ['id'=>$task->id])}}" class="card-title"> 
                         {{ ucfirst($task->title) }}
                     </a>
@@ -109,7 +109,10 @@
                                             $count++;
                                         @endphp
                                         @if ($count < 3)
-                                            <span class="member"><img src="{{ $user->avatar ? asset('storage'.$user->avatar) : asset('storage/uploads/avatar/user.png') }}" alt="avatar" ></span>                                                                                   
+                                            <span class="member">
+                                                <img src="{{ !empty($user->avatar) ? asset($user->avatar) : asset('avatar/user.png') }}" alt="avatar" >
+                                                <span class="member-name"> {{ ucwords($user->name) }}</span>
+                                            </span>                                                                                 
                                         @endif                                        
                                     @endif                                                                                                     
                                 @endforeach

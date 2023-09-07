@@ -75,7 +75,7 @@
                                     {{ $task->title }}
                                 </a>
                                 <div class="assigned"> 
-                                    <div class="ass-label"> Assigned to: </div> 
+                                    <div class="ass-label"> &nbsp; </div> 
                                     <div class="d-flex justify-content-end align-items-center">
                                         
                                         @if (($task->users)->count() > 0)
@@ -97,7 +97,10 @@
                                                         $count++;
                                                     @endphp
                                                     @if ($count < 3)
-                                                        <span class="member"><img src="{{ $user->avatar ? asset('storage'.$user->avatar) : asset('storage/uploads/avatar/user.png') }}" alt="avatar" ></span>                                                                                   
+                                                        <span class="member">
+                                                            <img src="{{ !empty($user->avatar) ? asset($user->avatar) : asset('avatar/user.png') }}" alt="avatar" >
+                                                            <span class="member-name"> {{ ucwords($user->name) }}</span>
+                                                        </span>                                                                                   
                                                     @endif                                        
                                                 @endif                                                                                                     
                                             @endforeach
@@ -143,8 +146,13 @@
             </div>
             <div class="dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class='user-icon'>
-                    <span class="username">{{ ucwords(Auth::user()->name) }}</span> 
-                    <span class="member"><img src="{{asset('img/man.png')}}" alt="" ></span>
+                    @php
+                        $user = Auth::user();
+                    @endphp
+                    <span class="username">{{ ucwords($user->name) }}</span> 
+                    <span class="member">
+                        <img src="{{ !empty($user->avatar) ? asset($user->avatar) : asset('avatar/user.png') }}" alt="user avatar" >
+                    </span>
                 </span>
             </div>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -205,7 +213,7 @@
     @yield('script')
 
     <script defer src="{{asset('js/delete_task.js')}}"></script>
-    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+    {{-- <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script> only necessary if using the 'filemanage' jQuery function --}}
 
 </body>
 </html>

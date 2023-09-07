@@ -12,57 +12,57 @@
         
         <h2 class="text-center mt-3 mb-5"> Profile </h2>
         
-        <div class="profile-body d-flex justify-content-between">
+        <div class="w-90 d-flex justify-content-between">
 
-            <div class="profile-photo d-flex flex-column align-items-center justify-content-between">
+            <div class="w-25 d-flex flex-column align-items-center justify-content-between">
                 
                 <div class="head w-100 d-flex flex-column align-items-center">
                     <div class="avatar w-100 d-flex justify-content-center align-items-end">
-                        <img src="{{asset('storage/uploads/avatar/1692975375_man.png')}}" alt="user photo" class="photo">
-                        {{-- <div class="modify-icon d-flex justify-content-center align-items-center">
-                           <button type="submit" class="modify-btn">
-                                <img src="{{asset('img/write.png')}}" alt="modify icon" class="photo-modify">
-                           </button>                         
-                        </div>                     --}}
+                        <div class="photo">
+                            @if (!empty($user->avatar))
+                                <img src="{{asset($user->avatar)}}" alt="user photo">
+                            @endif                            
+                        </div>
                     </div>
                     <div class="name mt-3">
-                        John Smith
+                        {{ ucwords($user->name) }}
                     </div>
                 </div>
 
                 <a href="{{ route('user.editProfile') }}" class="btn btn-primary edit-profile">Edit profile</a>
 
+
             </div>
             
-            <table class="profile-table">
+            <table class="profile-table w-65">
                 <tbody>
                     <tr class="row-stripe">
                         <td>Name</td>
-                        <td>John Smith</td>
+                        <td>{{ ucwords($user->name) }}</td>
                     </tr>
                     <tr>
                         <td>Gender</td>
-                        <td>Male</td>
+                        <td>{{ $user->gender ? displayGender($user->gender) : '----------' }}</td>
                     </tr>
                     <tr class="row-stripe">
                         <td>Email</td>
-                        <td>john@yahoo.com</td>
+                        <td>{{ $user->email }}</td>
                     </tr>
                     <tr>
                         <td>Password</td>
-                        <td><a href="http://">Change Password</a></td>
+                        <td><a href="{{ route('user.changePassword') }}" class="card-link">Change Password</a></td>
                     </tr>
                     <tr class="row-stripe">
                         <td>Role</td>
-                        <td>User</td>
+                        <td>{{ displayRole($user->role) }}</td>
                     </tr>
                     <tr>
                         <td>Phone</td>
-                        <td>11111111111</td>
+                        <td>{{ !empty($user->phone) ? $user->phone : '----------' }}</td>
                     </tr>
                     <tr class="row-stripe">
                         <td>Status</td>
-                        <td>Active</td>
+                        <td>{{ displayStatus($user->status) }}</td>
                     </tr>
 
                 </tbody>

@@ -1,26 +1,26 @@
+
+/********************************************** User Profil *****************************************************************/
+
 .layout-main .dashboard img {
     width: 30px;
     height: 30px;
     object-fit: cover;
     margin-right: 5px;
 }
-
+.w-90 {
+    width: 90%;
+}
+.w-65 {
+    width: 65%;
+}
 .profile {
     --fs-title: calc(0.4rem + 0.7vw);
     --w-modify: calc(0.6rem + 1.2vw);
     --pd-row: calc(0.3rem + 0.8vw);
+    --pd-row-edit: calc(0.3rem + 0.6vw); 
 
     color: black !important;
     font-size: var(--fs-title);   
-}
-.profile .profile-body {
-    width: 90%;
-}
-.profile .profile-photo {
-    width: 25%;
-}
-.profile .profile-table {
-    width: 65%;
 }
 .profile .photo {
     width: 50%;
@@ -47,7 +47,6 @@
     object-fit: fill;
     margin-top: -1px;
 }
-
 .profile .name {
     font-weight: 600;
 }
@@ -64,3 +63,21 @@
 .profile .row-stripe {
     background-color: rgb(226, 225, 225);
 }
+.profile .card-link {
+    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1)) !important;
+    text-decoration: underline !important;
+}
+
+.profile .profile-table-edit td {
+    padding: var(--pd-row-edit);
+}
+.profile input {
+    font-size: var(--fs-title) !important;
+}
+.profile .td-alert {
+    padding: 0 !important;
+}
+
+/******************************************** User Profil : change Password *************************************************/
+
+

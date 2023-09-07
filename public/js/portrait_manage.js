@@ -3,7 +3,7 @@ let lfm = function(id, type, options) {
 
     button.addEventListener('click', function () {
         let route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
-        // let target_input = document.getElementById(button.getAttribute('data-input'));
+        let target_input = document.getElementById(button.getAttribute('data-input'));
         let target_preview = document.getElementById(button.getAttribute('data-preview'));
         
         // clear previous preview
@@ -16,8 +16,8 @@ let lfm = function(id, type, options) {
         }).join(',');
 
         // set the value of the desired input to image url
-        // target_input.value = file_path;
-        // target_input.dispatchEvent(new Event('change'));
+        target_input.value = file_path;
+        target_input.dispatchEvent(new Event('change'));
 
         // set or change the preview image src
         items.forEach(function (item) {

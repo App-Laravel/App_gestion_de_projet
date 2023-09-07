@@ -110,6 +110,7 @@
     --w-title: 70%;
     --w-assigned: calc(var(--w-bloc) - var(--w-title));
     --w-avatar: calc(1rem + 0.4vw);
+    --fs-avatar: calc(0.2rem + 0.4vw);
     --w-sub-title: 70%;
     --w-action: calc(var(--w-bloc) - var(--w-sub-title));
     --w-action-icon: calc(0.7rem + 0.4vw);
@@ -154,12 +155,30 @@
     text-align: center;
     padding-top: 3.5px;
 }
-.tasks .pj-card .assigned img {
-    width: 100%;
+.tasks .member {
+    display: inline-block;
+    position: relative;
+    transition: all 1s ease-out;
+    z-index: 1;
+}
+.tasks .member img {
     width: var(--w-avatar);
     height: var(--w-avatar);
     border-radius: 100%;
     object-fit: cover;
+}
+.tasks .member-name {
+    display: none;
+    position: absolute;
+    text-align: end;
+    width: calc(50px + 5vw);
+    font-size: var(--fs-avatar);
+    top: -15px;
+    right: 0;
+    z-index: 2;
+}
+.tasks .member:hover .member-name {
+    display: inline-block;
 }
 .tasks .pj-card .card-project {
     width: var(--w-sub-title);
