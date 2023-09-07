@@ -18,9 +18,7 @@
     
     <script type="text/javascript" defer src="{{asset('js/app.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
-
-    <!-- Scripts -->
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+    
 </head>
 <body>
     <div id="app">

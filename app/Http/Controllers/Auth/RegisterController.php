@@ -67,9 +67,9 @@ class RegisterController extends Controller
         if ($response = $this->registered($request, $user)) {
             return $response;
         }
-
+        
         return request()->wantsJson()
                     ? new JsonResponse([], 201)
-                    : redirect($this->redirectPath());
+                    : redirect()->route('user.email-verification', $user);
     }
 }

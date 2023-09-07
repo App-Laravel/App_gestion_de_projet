@@ -15,7 +15,7 @@ class TaskController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
 
     // Show the user's list of all tasks.

@@ -16,9 +16,6 @@
     cursor: pointer;
     color: black;
 }
-.container-reset-password {
-    margin-top: 5rem;
-}
 .layout-main {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
@@ -315,3 +312,27 @@
         font-size: calc(0.3rem + 2vw);
     }
 }
+
+/*************************************** Pages : send verification email + Password forgot ***********************************************************/
+
+.container-reset-password {
+    margin-top: 5rem;
+}
+.container-reset-password a {
+    text-decoration: underline;
+    color: blue;
+}
+
+#app .card-header {
+    font-size: calc(0.52rem + 0.7vw);
+    background-color: rgb(226, 225, 225);
+}
+#app .card-body {
+    font-size: calc(0.4rem + 0.6vw);
+}
+#app .card-body button {
+    font-size: calc(0.45rem + 0.65vw);
+}
+
+
+
