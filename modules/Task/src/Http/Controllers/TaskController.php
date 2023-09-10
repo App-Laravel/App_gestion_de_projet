@@ -60,7 +60,8 @@ class TaskController extends Controller
         $task = checkTaskExistence($id);
         
         if (!empty($task)) {
-            $coworkers = $task->users;
+            $coworkers = $task->users()->whereNotNull('email_verified_at')->get();
+
             return view('Task::detail', compact('task', 'coworkers'));
         }
 
@@ -100,8 +101,11 @@ class TaskController extends Controller
     {
         $task = checkTaskExistence($id);
         if (!empty($task)) {
-            $coworkers = $task->users;
+
+            $coworkers = $task->users()->whereNotNull('email_verified_at')->get();
+
             session(['taskID'=>$id]);
+
             return view('Task::edit', compact('task', 'coworkers'));
         }
         abort(404);

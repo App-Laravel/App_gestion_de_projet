@@ -33,7 +33,7 @@ function getStatusClass($status) {
 
 // get the coworkers of the task from the task's ID
 function getTaskCoworkers($taskId) {
-    return Task::find($taskId)->users;
+    return Task::find($taskId)->users()->whereNotNull('email_verified_at')->get();;
 }
 
 // check if the task exists ?

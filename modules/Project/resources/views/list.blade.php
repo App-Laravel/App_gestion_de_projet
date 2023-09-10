@@ -53,11 +53,19 @@
         </div>
 
         @if (session('msg'))
-            <div class="alert alert-success" role="alert"> {{ session('msg') }} </div>
+            <div class="alert alert-success text-center" role="alert"> {{ session('msg') }} </div>
         @endif
 
         @if (session('msg-error'))
-            <div class="alert alert-warning" role="alert"> {{ session('msg-error') }} </div>
+            <div class="alert alert-warning text-center" role="alert"> {{ session('msg-error') }} </div>
+        @endif
+
+        @if (session('invitation-msg-error'))
+            <div class="alert alert-warning text-center" role="alert"> {{ session('invitation-msg-error') }} </div>
+        @endif
+
+        @if (session('edit-msg-error'))
+            <div class="alert alert-warning text-center" role="alert"> {{ session('edit-msg-error') }} </div>
         @endif
 
         <div class="cards w-100 mt-4 px-4 d-flex justify-content-between flex-wrap">

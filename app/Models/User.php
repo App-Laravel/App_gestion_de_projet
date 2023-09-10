@@ -51,7 +51,9 @@ class User extends Authenticatable implements MustVerifyEmail
             'users_projects',
             'user_id',
             'project_id'
-        )->withTimestamps();
+        )
+        ->withTimestamps()
+        ->withPivot('status', 'created_at', 'updated_at');
     }
 
     public function tasks() {

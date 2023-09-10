@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Auth;
 
 // get project's total of authenticated user 
 function getProjects() {
-    $participatedProjects = User::find(Auth::user()->id)->projects()->get();
+    $participatedProjects = User::find(Auth::user()->id)->projects()
+                                ->wherePivot('status', 1)                                    
+                                ->get();
     $createdProjects = Project::where('creator_id', Auth::user()->id)->get();
     $projects = ($participatedProjects->concat($createdProjects))->unique();
     return $projects;
@@ -40,10 +42,12 @@ function getProjectDone($project = null) {
 function getProjectsAdvancement($project = null) {
     if (!empty($project)) {
         $total = $project->tasks()->get();
+        
         if ($total->count() > 0) {
             $inprogess = getProjectInProgress($project);
             $done = getProjectDone($project);
             $advancement = (($inprogess->count())*0.5 + ($done->count())*1 )/($total->count());
+            
             return round($advancement, 2)*100;
         }       
     }
@@ -77,7 +81,10 @@ function dateDisplay($date) {
 
 // get the coworkers of the project from the project's ID
 function getCoworkers($projectId) {
-    return Project::find($projectId)->users;
+    return Project::find($projectId)
+                ->users()->whereNotNull('email_verified_at')
+                ->wherePivot('status', 1)                                    
+                ->get();
 }
 
 // check if it is integer

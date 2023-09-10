@@ -21,7 +21,9 @@ class Project extends Model
             'users_projects',
             'project_id',
             'user_id'            
-        )->withTimestamps();
+        )
+        ->withTimestamps()
+        ->withPivot('status', 'created_at', 'updated_at');
     }
 
     public function tasks() {

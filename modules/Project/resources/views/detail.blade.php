@@ -22,9 +22,17 @@
                         @if (session('msg'))
                             <div class="alert alert-success text-center" role="alert"> {{ session('msg') }} </div>
                         @endif
-                
+                        
                         @if (session('msg-error'))
                             <div class="alert alert-warning text-center" role="alert"> {{ session('msg-error') }} </div>
+                        @endif
+
+                        @if (session('invitation-msg'))
+                            <div class="alert alert-success text-center" role="alert"> {{ session('invitation-msg') }} </div>
+                        @endif
+
+                        @if (session('edit-msg-error'))
+                            <div class="alert alert-warning text-center" role="alert"> {{ session('edit-msg-error') }} </div>
                         @endif
                     </td>
                 </tr>
@@ -63,9 +71,13 @@
                             <label for="coworkers"> {{ $coworkers->count() }} </label>
                             <select id="coworkers" class="select-form">
 
-                                @foreach ($coworkers as $coworker)
-                                    <option value="{{ $coworker->id }}">{{ ucwords($coworker->name) }}</option>
-                                @endforeach
+                                @if ($coworkers->count() > 0)
+                                    @foreach ($coworkers as $coworker)
+                                        <option value="{{ $coworker->id }}">{{ ucwords($coworker->name) }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="0"> No Member </option>
+                                @endif                                
                                 
                             </select>
                         </div>

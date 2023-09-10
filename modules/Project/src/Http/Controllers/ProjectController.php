@@ -2,6 +2,7 @@
 
 namespace Modules\Project\src\Http\Controllers;
 
+use App\Events\InviteMembers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\Project\src\Models\Project;
@@ -10,7 +11,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Notifications\SendInvitationMail;
 use App\Rules\EmailRule;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class ProjectController extends Controller
 {
@@ -18,7 +21,6 @@ class ProjectController extends Controller
     {
         $this->middleware(['auth', 'verified']);
     }
-
 
     // Show the user's list of all projects.
     public function index(Request $request)
@@ -28,7 +30,10 @@ class ProjectController extends Controller
         $filter = $request->filter ?? 'created_at';
 
         // do query
-        $participatedProjects = User::find(Auth::user()->id)->projects()->where('name', 'like', "%$keyword%")->get();
+        $participatedProjects = User::find(Auth::user()->id)->projects()->where('name', 'like', "%$keyword%")
+                                    ->wherePivot('status', 1)                                    
+                                    ->get();
+        
         $createdProjects = Project::where('creator_id', Auth::user()->id)->where(function($query) use($keyword) {
                 $query->where('name', 'like', "%$keyword%");
                 $query->orWhere('comment', 'like', "%$keyword%");
@@ -66,7 +71,10 @@ class ProjectController extends Controller
             $inprogress = getProjectInProgress($project);
             $done = getProjectDone($project);
 
-            $coworkers = $project->users;
+            $coworkers = $project->users()->whereNotNull('email_verified_at')
+                                ->wherePivot('status', 1)
+                                ->get();                                 
+             
             return view('Project::detail', compact('project', 'coworkers', 'todo', 'inprogress', 'done'));
         }
 
@@ -105,10 +113,22 @@ class ProjectController extends Controller
     public function edit($id = null)
     {
         $project = checkProjectExistence($id);
+        
         if (!empty($project)) {
-            $coworkers = $project->users;
-            session(['id'=>$id]);
-            return view('Project::edit', compact('project', 'coworkers'));
+
+            if ($project->creator_id == Auth::user()->id) {
+
+                $coworkers = $project->users()->whereNotNull('email_verified_at')
+                                    ->wherePivot('status', 1)
+                                    ->get();
+
+                session(['id'=>$id]);
+
+                return view('Project::edit', compact('project', 'coworkers'));
+
+            } else {
+                return back()->with('edit-msg-error', trans('Project::messages.project-edit-owner-msg-error'));
+            }          
         }
         abort(404);        
     }
@@ -228,14 +248,97 @@ class ProjectController extends Controller
         $project->comment = $request->comment ?? '';
         $status = $project->save();
 
-        if ($request->route()->uri == 'user/projects/add') {
-            // create ids on intermediate table
-            $project->users()->attach($coworkers, ['created_at'=>now(), 'updated_at'=>now()]);
-        } else {
-            // update ids on intermediate table
-            $project->users()->sync($coworkers);
-        }
+        if (!empty($status)) {
+
+            if ($request->route()->uri == 'user/projects/add') {
+                // create ids on intermediate table
+                
+                $project->users()->attach($coworkers, ['created_at'=>now(), 'updated_at'=>now()]);
+
+                // send invitation email to each coworker
+                $this->sendEmailNotificationToNewMembers($project);
+                
+            } else {
+                // update ids on intermediate table
+                $project->users()->sync($coworkers);
+
+                // send invitation email to coworker who does not have the "active" status
+                $this->sendEmailNotificationToAddedMembers($project);
+            }
+        }       
         
         return $status;
+    }
+
+    // send Email Notification to new members (not you)
+    private function sendEmailNotificationToNewMembers($project)
+    {
+        if (($project->users)->count() > 0) {
+            foreach ($project->users as $user) {
+                // in case of authenticated user : set status = 1 and don't send email
+                if ($user->id == Auth::user()->id) {
+                    $project->users()->updateExistingPivot($user->id, [
+                        'status' => 1,
+                    ]);
+                } else {
+                    $user->notify(new SendInvitationMail($project));
+                }                   
+            }
+        }
+    }
+
+    // send Email Notification to added members (not you)
+    private function sendEmailNotificationToAddedMembers($project)
+    {
+        if (($project->users)->count() > 0) {
+            foreach ($project->users as $user) {
+                // in case of authenticated user : set status = 1 and don't send email
+                if ($user->id == Auth::user()->id) {
+                    $project->users()->updateExistingPivot($user->id, [
+                        'status' => 1,
+                    ]);
+                } else {
+                    if ($user->pivot->status == 0) {
+                        $user->notify(new SendInvitationMail($project));
+                    }
+                }                   
+            }
+        }
+    }
+
+
+    // Handle the acceptation of the invitation to join to the project
+    public function acceptInvitation(Request $request)
+    {
+        // check if url is correct
+        if (! hash_equals((string) $request->route('hash'), sha1($request->user()->getEmailForVerification()))) {
+            throw new AuthorizationException;
+        }
+        
+        // get infos from url
+        $projectID = $request->route('id');
+        $project = Project::find($projectID);
+
+        // get authenticated user
+        $userID = Auth::user()->id;
+
+        if (!empty($project)) {
+            // update the field "status" of the intermediate table (users_projects)
+            $status = $project->users()->updateExistingPivot($userID, [
+                'status' => 1,
+            ]);
+            
+            // return the view with success message
+            if (!empty($status)) {
+                return redirect()->route('user.projects.detail', ['id'=>$projectID])
+                                    ->with('invitation-msg', 'Thank you for your participation in this project.');
+            };
+
+            // return the error message in projects page
+            return redirect()->route('user.projects.index')
+                                ->with('invitation-msg-error', 'You can not participate in the project "'.$project->name.'". Please try again.');
+        }
+
+        abort(404);
     }
 }

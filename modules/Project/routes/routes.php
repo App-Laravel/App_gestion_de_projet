@@ -23,6 +23,11 @@ Route::prefix('user')->middleware('web')->name('user.')->group(function(){
 
         // delete a project
         Route::delete('/delete/{id}', [ProjectController::class, 'delete'])->name('delete');
+
+        // Accept the invitation
+        Route::get('/invitation/accept/{id}/{hash}', [ProjectController::class, 'acceptInvitation'])
+                ->middleware(['signed', 'throttle:6,1'])
+                ->name('accept-invitation');
     });
     
 });

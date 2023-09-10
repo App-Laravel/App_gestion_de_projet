@@ -8,4 +8,5 @@ return [
     'project-delete-msg'                => 'The project has been deleted.',
     'project-delete-msg-error'          => 'The project could not be deleted. Please try again later.',
     'project-delete-owner-msg-error'    => 'The project could not be deleted. You are not the owner of the project.',
+    'project-edit-owner-msg-error'      => 'You can not modify the project. You are not the owner of the project.',
 ];

@@ -13,7 +13,9 @@ class ApiController extends Controller
     public function projectMembers(Request $request) {
         
         $projectID = $request->projectID;
-        $users = Project::find($projectID)->users;
+        $users = Project::find($projectID)->users()->whereNotNull('email_verified_at')
+                                        ->wherePivot('status', 1)    
+                                        ->get();       
         
         $membersID = [];
         $membersName = [];
