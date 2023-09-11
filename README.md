@@ -74,7 +74,8 @@
 
 ![ModifyProfil](https://github.com/Project-Task-Management-App/project_manage_app/assets/107623849/a9eed83e-7c31-479e-850c-0a6d0b355d12)
 
-![addAvatar](https://github.com/Project-Task-Management-App/project_manage_app/assets/107623849/a94a270c-a42d-4b15-a9f9-0ecb049e778e)
+![addAvatar](https://github.com/Project-Task-Management-App/project_manage_app/assets/107623849/f7955ac8-c27e-4aea-80b9-1eade773b71f)
+
 
 
 
