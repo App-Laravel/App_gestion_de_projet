@@ -75,6 +75,6 @@ Route::prefix('user')->name('user.')->group(function(){
 
 /******************************************* File Manager ***********************************************************************/
 
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+Route::group(['prefix' => 'avatar-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });

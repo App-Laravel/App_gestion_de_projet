@@ -2,7 +2,7 @@ let lfm = function(id, type, options) {
     let button = document.getElementById(id);
 
     button.addEventListener('click', function () {
-        let route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
+        let route_prefix = (options && options.prefix) ? options.prefix : '/avatar-filemanager';
         let target_input = document.getElementById(button.getAttribute('data-input'));
         let target_preview = document.getElementById(button.getAttribute('data-preview'));
         

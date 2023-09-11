@@ -26,6 +26,6 @@ class SendInvitationMail
      */
     public function handle(InviteMembers $event)
     {
-        dd ($event->project->users);
+        
     }
 }

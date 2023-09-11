@@ -67,7 +67,9 @@
     color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1)) !important;
     text-decoration: underline !important;
 }
-
+.profile #lfm {
+    cursor: pointer;
+}
 .profile .profile-table-edit td {
     padding: var(--pd-row-edit);
 }
