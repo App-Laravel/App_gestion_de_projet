@@ -4,28 +4,31 @@
 
 ### 1.1. Front-end (interface user) : 
 
-###    - HTML + CSS (+ framework Bootstrap)
+    - HTML + CSS (+ framework Bootstrap)
 
-###    - Javascript
+    - Javascript
 
-###    - Librairie SweetAlert2
+    - Librairie SweetAlert2
 
 ### 1.2. Back-end :
 
-###    - PHP + framework Laravel
+    - PHP + framework Laravel
 
 ### 1.3. Base de données : MySQL. Le diagramme UML est joint dans le fichier .pdf.
 
 ### 1.4. Maquettage : figma. Les maquettes sont jointes dans le fichier .pdf.
 
 ## 2.	Réalisation
-- Un user peut lire les projets qu’il a créé ou participé.
 
-- Mais il ne peut modifier ou supprimer que les projets qu’il a créé. Lors de la création d’un projet, le créateur peut inviter les participants (via email, le participant doit avoir un compte user).
+    - Un user peut lire les projets qu’il a créé ou participé.
 
-- Dans un projet, on peut créer plusieurs tâches. 
+    - Mais il ne peut modifier ou supprimer que les projets qu’il a créé. 
+    
+    - Lors de la création d’un projet, le créateur peut inviter les participants (via email, le participant doit avoir un compte user).
 
-- Chaque tâche peut être faite par un ou plusieurs participants invités/enregistré de ce projet.
+    - Dans un projet, on peut créer plusieurs tâches. 
+
+    - Chaque tâche peut être faite par un ou plusieurs participants invités/enregistré de ce projet.
 
 ### 2.1.     Code (laravel) organisation :
 
