@@ -2,21 +2,21 @@
 
 ## 1.	Techniques
 
-### 1.1.    Front-end (interface user) : 
+### 1.1. Front-end (interface user) : 
 
-###    o	HTML + CSS (+ framework Bootstrap)
+###    - HTML + CSS (+ framework Bootstrap)
 
-###    o	Javascript
+###    - Javascript
 
-###    o	Librairie SweetAlert2
+###    - Librairie SweetAlert2
 
-### 1.2.    Back-end :
+### 1.2. Back-end :
 
-###    o	PHP + framework Laravel
+###    - PHP + framework Laravel
 
-### 1.3.    Base de données : MySQL. Le diagramme UML est joint dans le fichier .pdf.
+### 1.3. Base de données : MySQL. Le diagramme UML est joint dans le fichier .pdf.
 
-### 1.4.    Maquettage : figma. Les maquettes sont jointes dans le fichier .pdf.
+### 1.4. Maquettage : figma. Les maquettes sont jointes dans le fichier .pdf.
 
 ## 2.	Réalisation
 - Un user peut lire les projets qu’il a créé ou participé.
