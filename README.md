@@ -20,15 +20,21 @@
 
 ## 2.	Réalisation
 
-    - Un user peut lire les projets qu’il a créé ou participé.
-
-    - Mais il ne peut modifier ou supprimer que les projets qu’il a créé. 
-    
-    - Lors de la création d’un projet, le créateur peut inviter les participants (via email, le participant doit avoir un compte user).
-
-    - Dans un projet, on peut créer plusieurs tâches. 
-
-    - Chaque tâche peut être faite par un ou plusieurs participants invités/enregistré de ce projet.
+    - Module User :
+        + l'user peut créer un compte, modifier les infos de son compte (photo, name, ...).
+        
+    - Module Projet:
+        + Un user peut lire les projets qu’il a créé ou a accepté de participer.
+        + Un user peut créer les projets, modifier et supprimer ses propres projets.
+        + un user peut inviter les autre users à participer dans un projet. Un email d'invitation sera envoyé aux participants.
+        + autres : le filtre (par le nom de projet, priority, ...), la recherche (par le nom), la pagination.
+        
+    - Module Tâche :
+        + Dans un projet, on peut créer plusieurs tâches.
+        + Lors de la création d'une tâche, l'user peut inviter les participants enregistrés dans le projet (une tâche peut être faite par un ou plusieurs participants invités/enregistré de ce projet).
+        + l'user ne peut lire, modifier que les tâches qu’il a créé ou a accepté de participer.
+        + l'user ne peut supprimer que les tâches qu'il a créé.
+        + autres : le filtre, la recherche, la pagination.
 
 ### 2.1.     Code (laravel) organisation :
 
